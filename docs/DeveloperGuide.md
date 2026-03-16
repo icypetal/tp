@@ -344,6 +344,36 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
+**Use case: UC05 - Edit a player**
+
+**MSS**
+
+1. User requests to list players.
+2. DraftDeck shows a list of players.
+3. User requests to edit a specific player in the list.
+4. DraftDeck edits the player and shows a success message.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. There are no fields to edit.
+
+   * 3a1. DraftDeck displays an error message notifying the user that there must be at least one field.
+
+   Use case resumes at step 2.
+
+* 3b. The given index is invalid.
+
+   * 3b1. DraftDeck displays an error message and shows the correct index range.
+
+   Use case resumes at step 2.
+
+
 *{More to be added}*
 
 ### Non-Functional Requirements
