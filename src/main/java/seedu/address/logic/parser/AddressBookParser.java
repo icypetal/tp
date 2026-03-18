@@ -55,8 +55,11 @@ public class AddressBookParser {
                     return commandPair.getValue()
                     .map(x -> {
                         try {
-                            return (Command)x.getConstructor().newInstance().parse(arguments);
+                            return (Command) (x.getConstructor().newInstance().parse(arguments));
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
                         } catch (Exception e) {
+                            logger.severe(e.toString());
                             return null;
                         }
                     })
@@ -68,6 +71,12 @@ public class AddressBookParser {
                         }
                     });
                 }
+            } catch (RuntimeException e) {
+                if (e.getCause() instanceof ParseException) {
+                    logger.finer("This user input caused a ParseException: " + userInput);
+                    throw (ParseException) e.getCause();
+                }
+                logger.severe("Exception encountered in AddressBookParser." + e.toString());
             } catch (Exception e) {
                 logger.severe("Exception encountered in AddressBookParser." + e.toString());
             }
