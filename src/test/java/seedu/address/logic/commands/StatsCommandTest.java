@@ -123,7 +123,7 @@ public class StatsCommandTest {
 
         descriptor.setKills(new seedu.address.model.person.statistics.Kills(VALID_KILLS_SET_1));
         org.junit.jupiter.api.Assertions.assertTrue(descriptor.isAnyFieldEdited());
-        
+
         descriptor = new EditStatsDescriptor();
         descriptor.setDeaths(new seedu.address.model.person.statistics.Deaths(VALID_DEATHS_SET_1));
         org.junit.jupiter.api.Assertions.assertTrue(descriptor.isAnyFieldEdited());

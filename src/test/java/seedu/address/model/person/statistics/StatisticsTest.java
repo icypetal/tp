@@ -29,7 +29,10 @@ public class StatisticsTest {
         Statistics stats = new Statistics.Builder().withKills(new Kills("10")).withDeaths(new Deaths("5")).build();
 
         // same values -> returns true
-        assertTrue(stats.equals(new Statistics.Builder().withKills(new Kills("10")).withDeaths(new Deaths("5")).build()));
+        assertTrue(stats.equals(new Statistics.Builder()
+            .withKills(new Kills("10"))
+            .withDeaths(new Deaths("5"))
+            .build()));
 
         // same object -> returns true
         assertTrue(stats.equals(stats));
@@ -41,8 +44,14 @@ public class StatisticsTest {
         assertFalse(stats.equals("10"));
 
         // different values -> returns false
-        assertFalse(stats.equals(new Statistics.Builder().withKills(new Kills("20")).withDeaths(new Deaths("5")).build()));
-        assertFalse(stats.equals(new Statistics.Builder().withKills(new Kills("10")).withDeaths(new Deaths("15")).build()));
+        assertFalse(stats.equals(new Statistics.Builder()
+            .withKills(new Kills("20"))
+            .withDeaths(new Deaths("5"))
+            .build()));
+        assertFalse(stats.equals(new Statistics.Builder()
+            .withKills(new Kills("10"))
+            .withDeaths(new Deaths("15"))
+            .build()));
     }
 
     @Test
