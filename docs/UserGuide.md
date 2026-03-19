@@ -128,6 +128,18 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Locating persons by name: `filter`
+
+Finds persons whose tags contain any of the given keywords.
+
+Format: `filter KEYWORD [MORE_KEYWORDS]`
+
+* The search is case-insensitive. e.g `friend` will match `Fans`
+* Only the tags are searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `friends colleague` will return people who are tagged either `friends`, `colleague`, or both.
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.

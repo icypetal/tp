@@ -344,6 +344,54 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
+**UC03 - Filter players**
+
+**MSS**
+
+1.  User requests to list players.
+2.  DraftDeck shows a list of players.
+3.  User requests to filter players in the list by a certain attribute.
+4.  DraftDeck shows a filtered list of players.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The given filter is invalid.
+
+    * 3a1. DraftDeck shows an error message.
+
+    Use case resumes at step 2.
+
+**UC04 - Compare two player**
+
+**MSS**
+
+1.  User requests to list players.
+2.  DraftDeck shows a list of players.
+3.  User requests to compare two specific players in the list.
+4.  DraftDeck shows a comparison of the selected players.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The given index(es) is invalid.
+
+    *3a1. DraftDeck shows an error message.
+
+    Use case resumes at step 2.
+
+
+
 **Use case: UC05 - Edit a player**
 
 **MSS**
@@ -363,7 +411,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. There are no fields to edit.
 
-   * 3a1. DraftDeck displays an error message notifying the user that there must be at least one field.
+    * 3a1. DraftDeck displays an error message notifying the user that there must be at least one field.
 
    Use case resumes at step 2.
 
