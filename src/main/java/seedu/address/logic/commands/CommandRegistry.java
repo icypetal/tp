@@ -8,6 +8,7 @@ import javafx.util.Pair;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.parser.AddCommandParser;
 import seedu.address.logic.parser.DeleteCommandParser;
+import seedu.address.logic.parser.DraftCommandParser;
 import seedu.address.logic.parser.EditCommandParser;
 import seedu.address.logic.parser.FilterCommandParser;
 import seedu.address.logic.parser.FindCommandParser;
@@ -33,6 +34,8 @@ public class CommandRegistry {
             ClearCommand.class, Optional.empty()),
         new Pair<Class<? extends Command>, Optional<Class<? extends Parser<?>>>>(
             DeleteCommand.class, Optional.of(DeleteCommandParser.class)),
+        new Pair<Class<? extends Command>, Optional<Class<? extends Parser<?>>>>(
+            DraftCommand.class, Optional.of(DraftCommandParser.class)),
         new Pair<Class<? extends Command>, Optional<Class<? extends Parser<?>>>>(
             EditCommand.class, Optional.of(EditCommandParser.class)),
         new Pair<Class<? extends Command>, Optional<Class<? extends Parser<?>>>>(
