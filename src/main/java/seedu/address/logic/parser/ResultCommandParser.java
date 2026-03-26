@@ -3,11 +3,14 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_FIELD_QUANTITY_MISMATCH;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ASSISTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEATHS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_KILLS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESULT;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -38,7 +41,7 @@ public class ResultCommandParser implements Parser<ResultCommand> {
     @Override
     public ResultCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_RESULT, PREFIX_NAME, PREFIX_KILLS,
+                ArgumentTokenizer.tokenize(args, PREFIX_RESULT, PREFIX_DATE, PREFIX_NAME, PREFIX_KILLS,
                     PREFIX_DEATHS, PREFIX_ASSISTS);
         if (!arePrefixesPresent(argMultimap, PREFIX_RESULT, PREFIX_NAME, PREFIX_KILLS,
                 PREFIX_DEATHS, PREFIX_ASSISTS) || !argMultimap.getPreamble().isEmpty()) {
@@ -72,7 +75,18 @@ public class ResultCommandParser implements Parser<ResultCommand> {
             players.add(new PlayerInMatch(name, statistics));
         }
 
-        Match match = new Match(result, players);
+        Match match;
+
+        if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
+            try {
+                LocalDateTime date = LocalDateTime.parse(argMultimap.getValue(PREFIX_DATE).get());
+                match = new Match(date, result, players);
+            } catch (DateTimeParseException e) {
+                throw new ParseException(e.getMessage());
+            }
+        } else {
+            match = new Match(result, players);
+        }
 
         return new ResultCommand(match);
     }

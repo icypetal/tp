@@ -1,8 +1,7 @@
 package seedu.address.model.person.statistics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +13,11 @@ public class StatisticsTest {
         assertEquals(new Kills("0"), defaultStats.getKills());
         assertEquals(new Deaths("0"), defaultStats.getDeaths());
         assertEquals(new Assists("0"), defaultStats.getAssists());
+    }
+
+    @Test
+    public void createRandom_success() {
+        Statistics.createRandom(10, 10, 10);
     }
 
     @Test
@@ -36,37 +40,37 @@ public class StatisticsTest {
             .build();
 
         // same values -> returns true
-        assertTrue(stats.equals(new Statistics.Builder()
-            .withKills(new Kills("10"))
-            .withDeaths(new Deaths("5"))
-            .withAssists(new Assists("2"))
-            .build()));
+        assertEquals(stats, new Statistics.Builder()
+                .withKills(new Kills("10"))
+                .withDeaths(new Deaths("5"))
+                .withAssists(new Assists("2"))
+                .build());
 
         // same object -> returns true
-        assertTrue(stats.equals(stats));
+        assertEquals(stats, stats);
 
         // null -> returns false
-        assertFalse(stats.equals(null));
+        assertNotEquals(null, stats);
 
         // different types -> returns false
-        assertFalse(stats.equals("10"));
+        assertNotEquals("10", stats);
 
         // different values -> returns false
-        assertFalse(stats.equals(new Statistics.Builder()
-            .withKills(new Kills("20"))
-            .withDeaths(new Deaths("5"))
-            .withAssists(new Assists("2"))
-            .build()));
-        assertFalse(stats.equals(new Statistics.Builder()
-            .withKills(new Kills("10"))
-            .withDeaths(new Deaths("15"))
-            .withAssists(new Assists("2"))
-            .build()));
-        assertFalse(stats.equals(new Statistics.Builder()
-            .withKills(new Kills("10"))
-            .withDeaths(new Deaths("5"))
-            .withAssists(new Assists("8"))
-            .build()));
+        assertNotEquals(stats, new Statistics.Builder()
+                .withKills(new Kills("20"))
+                .withDeaths(new Deaths("5"))
+                .withAssists(new Assists("2"))
+                .build());
+        assertNotEquals(stats, new Statistics.Builder()
+                .withKills(new Kills("10"))
+                .withDeaths(new Deaths("15"))
+                .withAssists(new Assists("2"))
+                .build());
+        assertNotEquals(stats, new Statistics.Builder()
+                .withKills(new Kills("10"))
+                .withDeaths(new Deaths("5"))
+                .withAssists(new Assists("8"))
+                .build());
     }
 
     @Test

@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ASSISTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEATHS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_KILLS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -22,6 +23,7 @@ public class ResultCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a match to the Match Record. "
             + "Parameters: "
             + PREFIX_RESULT + "RESULT (must be one of: WIN, LOSE, DRAW) "
+            + "[" + PREFIX_DATE + "yyyy-MM-dd'T'HH:mm:ss] "
             + PREFIX_NAME + "NAME "
             + PREFIX_KILLS + "KILLS "
             + PREFIX_DEATHS + "DEATHS "
