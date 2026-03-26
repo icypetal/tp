@@ -11,6 +11,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyMatchRecord;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.entity.EntityReference;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -21,16 +22,18 @@ public class StorageManager implements Storage {
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
     private MatchRecordStorage matchRecordStorage;
+    private EntityStorage entityStorage;
 
     /**
      * Creates a {@code StorageManager} with the given {@code AddressBookStorage}, {@code MatchRecordStorage}.
-     * and {@code UserPrefStorage}
+     * {@code UserPrefStorage} and {@code EntityStorage}
      */
     public StorageManager(AddressBookStorage addressBookStorage, MatchRecordStorage matchRecordStorage,
-                          UserPrefsStorage userPrefsStorage) {
+                          UserPrefsStorage userPrefsStorage, EntityStorage entityStorage) {
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.matchRecordStorage = matchRecordStorage;
+        this.entityStorage = entityStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -104,6 +107,25 @@ public class StorageManager implements Storage {
     public void saveMatchRecord(ReadOnlyMatchRecord matchRecord, Path filePath) throws IOException {
         logger.fine("Attempting to write to match record data file: " + filePath);
         matchRecordStorage.saveMatchRecord(matchRecord, filePath);
+    }
+
+    // ================ Entity methods ==============================
+
+    @Override
+    public Path getEntityFilePath() {
+        return entityStorage.getEntityFilePath();
+    }
+
+    @Override
+    public Optional<EntityReference> readEntityReference() throws DataLoadingException {
+        return entityStorage.readEntityReference();
+    }
+
+    @Override
+    public Optional<EntityReference> readEntityReference(Path filePath)
+            throws DataLoadingException {
+        logger.fine("Attempting to read entity data from file: " + filePath);
+        return entityStorage.readEntityReference(filePath);
     }
 
 }

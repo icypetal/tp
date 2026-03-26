@@ -13,7 +13,7 @@ import seedu.address.model.UserPrefs;
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, UserPrefsStorage, MatchRecordStorage {
+public interface Storage extends AddressBookStorage, UserPrefsStorage, MatchRecordStorage, EntityStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataLoadingException;
@@ -35,5 +35,11 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, MatchReco
 
     @Override
     void saveMatchRecord(ReadOnlyMatchRecord matchRecord) throws IOException;
+
+    @Override
+    Path getEntityFilePath();
+
+    @Override
+    Optional<seedu.address.model.entity.EntityReference> readEntityReference() throws DataLoadingException;
 
 }

@@ -1,0 +1,36 @@
+{
+  "entities": [
+    {
+      "name": "Ahri",
+      "iconPath": "/images/entities/ahri.png"
+    },
+    {
+      "name": "Garen",
+      "iconPath": "/images/entities/garen.png"
+    },
+    {
+      "name": "Lux",
+      "iconPath": "/images/entities/lux.png"
+    },
+    {
+      "name": "Ashe",
+      "iconPath": "/images/entities/ashe.png"
+    },
+    {
+      "name": "Jinx",
+      "iconPath": "/images/entities/jinx.png"
+    },
+    {
+      "name": "Yasuo",
+      "iconPath": "/images/entities/yasuo.png"
+    },
+    {
+      "name": "Lee Sin",
+      "iconPath": "/images/entities/leesin.png"
+    },
+    {
+      "name": "Thresh",
+      "iconPath": "/images/entities/thresh.png"
+    }
+  ]
+}

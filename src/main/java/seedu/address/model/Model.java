@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.entity.EntityReference;
 import seedu.address.model.match.Match;
 import seedu.address.model.person.Person;
 
@@ -116,8 +117,28 @@ public interface Model {
     void deleteMatch(Match target);
 
     /**
-     * Adds the given match.
+     * Adds` given match.
      */
     void addMatch(Match match);
+
+    /**
+     * Returns the EntityReference containing all entities.
+     */
+    EntityReference getEntityReference();
+
+    /**
+     * Sets the EntityReference.
+     */
+    void setEntityReference(EntityReference entityReference);
+
+    /**
+     * Returns the user prefs' entity file path.
+     */
+    Path getEntityFilePath();
+
+    /**
+     * Sets the user prefs' entity file path.
+     */
+    void setEntityFilePath(Path entityFilePath);
 
 }

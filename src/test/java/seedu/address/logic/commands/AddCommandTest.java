@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.entity.EntityReference;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -192,6 +193,26 @@ public class AddCommandTest {
 
         @Override
         public void addMatch(Match match) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public EntityReference getEntityReference() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setEntityReference(EntityReference entityReference) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Path getEntityFilePath() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setEntityFilePath(Path entityFilePath) {
             throw new AssertionError("This method should not be called.");
         }
     }

@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.entity.EntityReference;
 import seedu.address.model.match.Match;
 import seedu.address.model.person.Person;
 
@@ -23,6 +24,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final MatchRecord matchRecord;
+    private EntityReference entityReference;
     private final FilteredList<Person> filteredPersons;
 
     /**
@@ -183,6 +185,30 @@ public class ModelManager implements Model {
     @Override
     public void addMatch(Match match) {
         matchRecord.addMatch(match);
+    }
+
+    //=========== EntityReference =============================================================================
+
+    @Override
+    public EntityReference getEntityReference() {
+        return entityReference;
+    }
+
+    @Override
+    public void setEntityReference(EntityReference entityReference) {
+        requireNonNull(entityReference);
+        this.entityReference = entityReference;
+    }
+
+    @Override
+    public Path getEntityFilePath() {
+        return userPrefs.getEntityFilePath();
+    }
+
+    @Override
+    public void setEntityFilePath(Path entityFilePath) {
+        requireNonNull(entityFilePath);
+        userPrefs.setEntityFilePath(entityFilePath);
     }
 
     @Override
