@@ -80,7 +80,7 @@ public class DraftCommandTest {
 
     @Test
     public void execute_invalidPersonIndex_failure() {
-        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundsIndex = Index.fromOneBased(model.getAddressBook().getPersonList().size() + 1);
         DraftCommand draftCommand = new DraftCommand(List.of(INDEX_FIRST_PERSON, outOfBoundsIndex), List.of());
 
         assertCommandFailure(draftCommand, model, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

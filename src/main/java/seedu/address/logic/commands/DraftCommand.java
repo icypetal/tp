@@ -54,23 +54,23 @@ public class DraftCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Person> addressBookList = model.getAddressBook().getPersonList();
 
         // Resolve all players from both indices and IGNs
         List<Person> selectedPlayers = new ArrayList<>();
 
         // Resolve indices
         for (Index index : indices) {
-            if (index.getZeroBased() >= lastShownList.size()) {
+            if (index.getZeroBased() >= addressBookList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            selectedPlayers.add(lastShownList.get(index.getZeroBased()));
+            selectedPlayers.add(addressBookList.get(index.getZeroBased()));
         }
 
         // Resolve IGNs
         for (String ign : igns) {
             boolean found = false;
-            for (Person person : lastShownList) {
+            for (Person person : addressBookList) {
                 if (person.getIgn().value.equals(ign)) {
                     selectedPlayers.add(person);
                     found = true;
