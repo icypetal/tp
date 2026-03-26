@@ -43,6 +43,8 @@ public class DraftCommandParser implements Parser<DraftCommand> {
                     throw new ParseException(MESSAGE_INVALID_IGN_EMPTY);
                 }
                 igns.add(ign);
+            } else if (!argString.matches("\\d+")) {
+                igns.add(argString);
             } else {
                 Index index = ParserUtil.parseIndex(argString);
                 indices.add(index);
