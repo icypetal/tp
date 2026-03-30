@@ -132,19 +132,19 @@ public class DraftPanel extends UiPart<HBox> {
     private int getRoleOrder(Person player) {
         RoleType role = player.getRole().value;
         return switch (role) {
-            case TOP -> 0;
-            case JUNGLE -> 1;
-            case MID -> 2;
-            case BOT -> 3;
-            case SUPPORT -> 4;
+        case TOP -> 0;
+        case JUNGLE -> 1;
+        case MID -> 2;
+        case BOT -> 3;
+        case SUPPORT -> 4;
         };
     }
 
     /**
      * Sets the player details for a role panel.
      */
-    private void setPlayerDetails(Person player, RoleType role, Label nameLabel, Label roleLabel,
-                                   Label rankLabel, Label killsLabel, Label deathsLabel, Label assistsLabel, Label kdLabel) {
+    private void setPlayerDetails(Person player, RoleType role, Label nameLabel, Label roleLabel, Label rankLabel,
+                                   Label killsLabel, Label deathsLabel, Label assistsLabel, Label kdLabel) {
         String displayName = player.getIgn().toString() + " (" + player.getName().fullName + ")";
         nameLabel.setText(displayName);
         roleLabel.setText(player.getRole().value.toString());
