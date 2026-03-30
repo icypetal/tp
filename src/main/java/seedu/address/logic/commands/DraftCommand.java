@@ -84,7 +84,8 @@ public class DraftCommand extends Command {
 
         // Validate composition and generate result message
         String validationMessage = generateValidationMessage(selectedPlayers);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, validationMessage));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, validationMessage),
+                false, false, false, null, null, true, selectedPlayers);
     }
 
     /**
