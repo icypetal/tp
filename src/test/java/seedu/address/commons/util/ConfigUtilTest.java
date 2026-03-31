@@ -92,12 +92,14 @@ public class ConfigUtilTest {
         //Try writing when the file doesn't exist
         ConfigUtil.saveConfig(original, configFilePath);
         Config readBack = ConfigUtil.readConfig(configFilePath).get();
+        original.setUserPrefsFilePath(original.getUserPrefsFilePath().toAbsolutePath());
         assertEquals(original, readBack);
 
         //Try saving when the file exists
         original.setLogLevel(Level.FINE);
         ConfigUtil.saveConfig(original, configFilePath);
         readBack = ConfigUtil.readConfig(configFilePath).get();
+        original.setUserPrefsFilePath(original.getUserPrefsFilePath().toAbsolutePath());
         assertEquals(original, readBack);
     }
 

@@ -15,6 +15,7 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.mcp.McpServerManager;
 import seedu.address.model.AddressBook;
 import seedu.address.model.MatchRecord;
 import seedu.address.model.Model;
@@ -187,6 +188,7 @@ public class MainApp extends Application {
     @Override
     public void stop() {
         logger.info("============================ [ Stopping AddressBook ] =============================");
+        McpServerManager.getInstance().stop();
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {

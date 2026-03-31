@@ -13,6 +13,7 @@ import seedu.address.logic.parser.DraftCommandParser;
 import seedu.address.logic.parser.EditCommandParser;
 import seedu.address.logic.parser.FilterCommandParser;
 import seedu.address.logic.parser.FindCommandParser;
+import seedu.address.logic.parser.McpCommandParser;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ResultCommandParser;
 import seedu.address.logic.parser.StatsCommandParser;
@@ -55,7 +56,9 @@ public class CommandRegistry {
         new Pair<Class<? extends Command>, Optional<Class<? extends Parser<?>>>>(
             StatsCommand.class, Optional.of(StatsCommandParser.class)),
         new Pair<Class<? extends Command>, Optional<Class<? extends Parser<?>>>>(
-            ResultCommand.class, Optional.of(ResultCommandParser.class)
+            ResultCommand.class, Optional.of(ResultCommandParser.class)),
+        new Pair<Class<? extends Command>, Optional<Class<? extends Parser<?>>>>(
+            McpCommand.class, Optional.of(McpCommandParser.class)
         )
     );
 
@@ -66,6 +69,10 @@ public class CommandRegistry {
         throw new AssertionError("CommandRegistry should not be instantiated");
     }
 
+    /**
+     * Returns a summary string of all available commands.
+     * @return the help string.
+     */
     public static String getHelp() {
         String output = "";
         for (Pair<Class<? extends Command>, Optional<Class<? extends Parser<?>>>>
