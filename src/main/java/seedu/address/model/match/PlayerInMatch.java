@@ -57,8 +57,7 @@ public class PlayerInMatch {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("IGN", ign)
+        return new ToStringBuilder(ign.toString())
                 .add("statistics", statistics)
                 .toString();
     }

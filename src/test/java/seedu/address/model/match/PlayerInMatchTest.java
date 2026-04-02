@@ -43,8 +43,7 @@ public class PlayerInMatchTest {
     @Test
     public void toStringMethod() {
         PlayerInMatch player = TypicalMatches.FOUR_PLAYERS.get(2);
-        String expected = PlayerInMatch.class.getCanonicalName() + "{IGN=" + player.getInGameName() + ", statistics="
-                + player.getStatistics() + "}";
+        String expected = player.getInGameName() + "{statistics=" + player.getStatistics() + "}";
         assertEquals(expected, player.toString());
     }
 
