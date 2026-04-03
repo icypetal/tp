@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,8 +13,11 @@
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" percentWidth="50" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" percentWidth="50" />
     </columnConstraints>
+    
+    <!-- Left Column: Person Information -->
     <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
@@ -34,6 +38,17 @@
       <Label fx:id="role" styleClass="cell_small_label" text="\$role" />
       <Label fx:id="rank" styleClass="cell_small_label" text="\$rank" />
       <Label fx:id="stats" styleClass="cell_small_label" text="\$stats" />
+    </VBox>
+    
+    <!-- Right Column: Entity Icons and Stats -->
+    <VBox alignment="TOP_LEFT" spacing="5" GridPane.columnIndex="1">
+      <padding>
+        <Insets top="5" right="10" bottom="5" left="5" />
+      </padding>
+      <Label text="Entity Stats" styleClass="cell_small_label" style="-fx-font-weight: bold;" />
+      <FlowPane fx:id="entityIconsGrid" hgap="5" vgap="5" />
+      <Label fx:id="selectedEntityLabel" styleClass="cell_small_label" style="-fx-font-weight: bold;" />
+      <Label fx:id="entityStatsDisplay" styleClass="cell_small_label" />
     </VBox>
   </GridPane>
 </HBox>
