@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 
 import javafx.application.Platform;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ import seedu.address.testutil.PersonBuilder;
 /**
  * Contains tests for PersonCard, specifically testing the createEntityButton() functionality.
  */
+@EnabledIf("isGraphicsEnvironmentAvailable")
 public class PersonCardTest {
 
     private static final String TEST_IMAGE_NAME = "Ahri.png";
