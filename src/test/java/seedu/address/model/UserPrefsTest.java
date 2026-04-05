@@ -24,4 +24,10 @@ public class UserPrefsTest {
         assertThrows(NullPointerException.class, () -> userPrefs.setMatchRecordFilePath(null));
     }
 
+    @Test
+    public void setEntityReferenceFilePath_nullPath_throwsNullPointerException() {
+        UserPrefs userPrefs = new UserPrefs();
+        assertThrows(NullPointerException.class, () -> userPrefs.setEntityFilePath(null));
+    }
+
 }

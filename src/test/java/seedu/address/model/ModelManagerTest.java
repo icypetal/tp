@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTITY_REFERENCE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -122,6 +123,19 @@ public class ModelManagerTest {
         TypicalMatches.FOUR_PERSONS.forEach(modelManager::addPerson);
         modelManager.addMatch(TypicalMatches.LOSING_MATCH_4);
         assertTrue(modelManager.hasMatch(TypicalMatches.LOSING_MATCH_4));
+    }
+
+    @Test
+    public void setEntityReference_validEntityReference_setsEntityReference() {
+        modelManager.setEntityReference(VALID_ENTITY_REFERENCE);
+        assertEquals(VALID_ENTITY_REFERENCE, modelManager.getEntityReference());
+    }
+
+    @Test
+    public void setEntityFilePath_validPath_setsEntityFilePath() {
+        Path path = Paths.get("address/book/file/path");
+        modelManager.setEntityFilePath(path);
+        assertEquals(path, modelManager.getEntityFilePath());
     }
 
     @Test

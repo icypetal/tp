@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTITY_2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTITY_STATISTIC_MAP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_KILLS_SET_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_KILLS_SET_2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATS_SET_1;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -26,6 +27,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.entity.EntityStatisticMap;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditStatsDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -38,6 +40,58 @@ public class StatsCommandTest {
     public void execute_statisticsSpecifiedUnfilteredList_success() {
         Person firstPerson = model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(firstPerson).withEntityStatistics(VALID_ENTITY_STATISTIC_MAP).build();
+        EditStatsDescriptor descriptor = new EditStatsDescriptorBuilder()
+                .withEntity(VALID_ENTITY_1)
+                .withKills(VALID_KILLS_SET_1)
+                .withDeaths(VALID_DEATHS_SET_1)
+                .withAssists(VALID_ASSISTS_SET_1)
+                .build();
+        StatsCommand statsCommand = new StatsCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(StatsCommand.MESSAGE_STATS_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+
+        assertCommandSuccess(statsCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_statistics_personWithoutExistingEntityEntry() {
+        Person firstPerson = model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person emptyEntityMapPerson = new PersonBuilder(firstPerson)
+            .withEntityStatistics(new EntityStatisticMap()).build();
+        model.setPerson(firstPerson, emptyEntityMapPerson); //reset's first person's entity statistic map to be empty
+        Person editedPerson = new PersonBuilder(emptyEntityMapPerson)
+            .withEntityStatistics(VALID_ENTITY_STATISTIC_MAP).build();
+        EditStatsDescriptor descriptor = new EditStatsDescriptorBuilder()
+                .withEntity(VALID_ENTITY_1)
+                .withKills(VALID_KILLS_SET_1)
+                .withDeaths(VALID_DEATHS_SET_1)
+                .withAssists(VALID_ASSISTS_SET_1)
+                .build();
+        StatsCommand statsCommand = new StatsCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(StatsCommand.MESSAGE_STATS_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+
+        assertCommandSuccess(statsCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_statistics_personWithExistingEntityEntry() {
+        Person firstPerson = model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person filledEntityMapPerson = new PersonBuilder(firstPerson)
+            .withEntityStatistics(VALID_ENTITY_STATISTIC_MAP).build();
+        model.setPerson(firstPerson, filledEntityMapPerson);
+        EntityStatisticMap updatedEntityStatisticMap = new EntityStatisticMap.Builder()
+            .withEntity(VALID_ENTITY_1,
+                VALID_STATS_SET_1.add(VALID_STATS_SET_1))
+            .build();
+        Person editedPerson = new PersonBuilder(filledEntityMapPerson)
+            .withEntityStatistics(updatedEntityStatisticMap).build();
         EditStatsDescriptor descriptor = new EditStatsDescriptorBuilder()
                 .withEntity(VALID_ENTITY_1)
                 .withKills(VALID_KILLS_SET_1)
