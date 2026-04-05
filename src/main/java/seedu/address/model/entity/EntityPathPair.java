@@ -49,7 +49,7 @@ public class EntityPathPair {
         }
 
         EntityPathPair otherEntity = (EntityPathPair) other;
-        return otherEntity.getEntity().equals(this.getEntity()) &&
-            otherEntity.getPath().equals(this.getPath());
+        return otherEntity.getEntity().equals(this.getEntity())
+            && otherEntity.getPath().equals(this.getPath());
     }
 }

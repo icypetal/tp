@@ -115,7 +115,7 @@ public class EntityReference {
             return false;
         }
         EntityReference that = (EntityReference) obj;
-        return entities.equals(that.entities) &&
-            entityIconMap.equals(that.entityIconMap);
+        return entities.equals(that.entities)
+            && entityIconMap.equals(that.entityIconMap);
     }
 }

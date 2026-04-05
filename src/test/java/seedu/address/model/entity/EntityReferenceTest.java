@@ -2,14 +2,12 @@ package seedu.address.model.entity;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTITY_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTITY_NAME_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTITY_REFERENCE;
+import static seedu.address.testutil.Assert.assertThrows;
+
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +34,7 @@ public class EntityReferenceTest {
         VALID_ENTITY_REFERENCE.reload();
         assertTrue(EntityReference.hasEntity(VALID_ENTITY_NAME_1));
         assertFalse(EntityReference.hasEntity("INVALID_ENTITY"));
-    
+
         assertTrue(EntityReference.findByName(VALID_ENTITY_NAME_1).get().equals(VALID_ENTITY_1));
         assertTrue(EntityReference.findByName("INVALID_ENTITY").isEmpty());
 
@@ -44,7 +42,7 @@ public class EntityReferenceTest {
         emptyEntityReference.reload();
         assertFalse(EntityReference.hasEntity(VALID_ENTITY_NAME_1));
         assertFalse(EntityReference.hasEntity("INVALID_ENTITY"));
-    
+
         assertTrue(EntityReference.findByName(VALID_ENTITY_NAME_1).isEmpty());
         assertTrue(EntityReference.findByName("INVALID_ENTITY").isEmpty());
     }

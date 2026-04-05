@@ -13,9 +13,9 @@ public class EntityPathPairTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new EntityPathPair(null, null));
-        
+
         assertThrows(NullPointerException.class, () -> new EntityPathPair(null, Path.of("/")));
-        
+
         assertThrows(NullPointerException.class, () -> new EntityPathPair(new Entity("validentity"), null));
     }
 
