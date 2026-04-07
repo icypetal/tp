@@ -60,8 +60,8 @@ public class SampleEntityUtilTest {
         for (EntityPathPair pair : entities) {
             assertNotNull(pair.getPath(), "Image path should not be null");
             String pathString = pair.getPath().toString();
-            assertTrue(pathString.startsWith("/images/") || pathString.startsWith("\\images\\"),
-                String.format("Image path should start with /images/ or \\images\\, but path is %s", pathString));
+            assertTrue(pathString.startsWith("images/") || pathString.startsWith("images\\"),
+                String.format("Image path should start with images/ or images\\, but path is %s", pathString));
             assertTrue(pathString.endsWith(".jpg"),
                 String.format("Image path should end with .jpg, but is %s", pathString));
         }
