@@ -15,11 +15,15 @@ DraftDeck is a **desktop app for managing gaming teams and players, optimized fo
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-2/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your DraftDeck.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+If you wish to use images, place the images folder here as well!
+</div>
+
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar draftdeck.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -51,6 +55,9 @@ DraftDeck is a **desktop app for managing gaming teams and players, optimized fo
 
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+
+* Items in round brackets are required, but are in an either|or format.<br>
+  e.g `(INDEX | i/IGN)` can be `1` or `i/Player1`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
