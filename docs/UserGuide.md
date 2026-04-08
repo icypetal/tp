@@ -109,6 +109,16 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com i/JohnD88 r/MID rank/GOLD`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com i/Betsycrowe r/BOT rank/PLATINUM p/1234567`
 
+#### Deleting a person : `delete`
+
+Deletes the specified person from the player list.
+
+Format: `delete INDEX`
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
 #### Editing a person : `edit`
 
 Edits an existing person in the player list.
@@ -132,19 +142,6 @@ Examples:
 Shows a list of all persons in the player list.
 
 Format: `list`
-
-#### Deleting a person : `delete`
-
-Deletes the specified person from the player list.
-
-Format: `delete INDEX`
-
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `list` followed by `delete 2` deletes the person indexed as `2` in the player list.
 
 ### Search and Discovery
 
@@ -186,6 +183,20 @@ Examples:
 
 ### Sports and Analytics
 
+#### Comparing players : `compare`
+
+Compares two players identified by their index numbers.
+
+Format: `compare (INDEX1 | i/IGN1) (INDEX2 | i/IGN2)`
+
+* Displays details of both players side by side.
+* The indices refer to the index numbers shown in the displayed person list.
+* Indices **must be positive integers** 1, 2, 3, …​
+
+Example:
+* `compare 1 2` Compares the 1st and 2nd indexed players in the current list.
+* `compare i/AlexY42 2` Compares the player with the IGN AlexY42 and the 2nd indexed player in the current list.
+
 #### Drafting a team : `draft`
 
 Tests if a specific team composition is valid.
@@ -204,20 +215,6 @@ Examples:
 Example output:
 ![Sample output for valid composition](images/draftSuccess.png)
 
-#### Comparing players : `compare`
-
-Compares two players identified by their index numbers.
-
-Format: `compare (INDEX1 | i/IGN1) (INDEX2 | i/IGN2)`
-
-* Displays details of both players side by side.
-* The indices refer to the index numbers shown in the displayed person list.
-* Both indices **must be positive integers** 1, 2, 3, …​
-
-Example:
-* `compare 1 2` Compares the 1st and 2nd indexed players in the current list.
-* `compare i/AlexY42 2` Compares the player with the IGN AlexY42 and the 2nd indexed player in the current list.
-
 #### Updating player statistics : `stats`
 
 Updates the statistics of a player for a specific entity.
@@ -225,7 +222,7 @@ Updates the statistics of a player for a specific entity.
 Format: `stats (INDEX | i/IGN) ent/ENTITY [k/KILLS] [d/DEATHS] [a/ASSISTS]`
 
 * Updates the person at the specified `INDEX`, or with the specified IGN. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* `ent/ENTITY` is required and specifies which entity/game the statistics are for.
+* `ent/ENTITY` is required and specifies which champion the statistics are for.
 * At least one of the statistics fields (kills, deaths, assists) must be provided.
 * Existing statistics for the entity will be added to the new values.
 
@@ -298,3 +295,9 @@ Action | Format, Examples
 **Result** | `result w/RESULT [date/yyyy-MM-dd] i/IGN ent/ENTITY k/KILLS d/DEATHS a/ASSISTS [(i/IGN ent/ENTITY k/KILLS d/DEATHS a/ASSISTS)]…​`<br> e.g., `result w/WIN i/PlayerA ent/Ahri k/10 d/2 a/8 i/PlayerB ent/Leona k/1 d/1 a=12`
 **Stats** | `stats INDEX ent/ENTITY [k/KILLS] [d/DEATHS] [a/ASSISTS]`<br> e.g., `stats 1 ent/Ahri k/50 d/10 a/20`
 **Help** | `help`
+
+
+### Glossary
+
+* **IGN**: In-Game Name, a player's username in the game
+* **Entity**: An umbrella term for a character that the player plays in the game. In League of Legends, this refers to a 'Champion'. In other games, this may refer to an 'Agent', 'Operator', 'Hero', or whatever term that particular game uses.
