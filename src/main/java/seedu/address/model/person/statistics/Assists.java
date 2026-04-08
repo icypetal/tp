@@ -50,6 +50,9 @@ public class Assists {
      * @return a new Assists containing the sum
      */
     public Assists add(Assists other) {
+        if (Integer.MAX_VALUE - this.value < other.value) {
+            return new Assists(Integer.MAX_VALUE);
+        }
         return new Assists(this.value + other.value);
     }
 

@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Player's total number of kills.
- * Guarantees: immutable; is valid as declared in {@link #isValidKills(String)}
+ * Represents a Player's total number of kills. Guarantees: immutable; is valid as declared in
+ * {@link #isValidKills(String)}
  */
 public class Kills {
     public static final String MESSAGE_CONSTRAINTS =
@@ -45,10 +45,14 @@ public class Kills {
 
     /**
      * Returns a new Kills containing the sum of this Kills and the other Kills.
+     *
      * @param other the other kills
      * @return a new Kills containing the sum
      */
     public Kills add(Kills other) {
+        if (Integer.MAX_VALUE - this.value < other.value) {
+            return new Kills(Integer.MAX_VALUE);
+        }
         return new Kills(this.value + other.value);
     }
 

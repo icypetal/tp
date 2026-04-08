@@ -50,6 +50,9 @@ public class Deaths {
      * @return a new Deaths containing the sum
      */
     public Deaths add(Deaths other) {
+        if (Integer.MAX_VALUE - this.value < other.value) {
+            return new Deaths(Integer.MAX_VALUE);
+        }
         return new Deaths(this.value + other.value);
     }
 
