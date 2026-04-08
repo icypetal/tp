@@ -86,6 +86,11 @@ public class DraftCommand extends Command {
             }
         }
 
+        // Check for exactly 5 unique players
+        if (selectedPlayers.size() != REQUIRED_TEAM_SIZE) {
+            throw new CommandException(String.format(MESSAGE_INVALID_TEAM_SIZE, selectedPlayers.size()));
+        }
+
         // Check for duplicate players
         for (int i = 0; i < selectedPlayers.size(); i++) {
             for (int j = i + 1; j < selectedPlayers.size(); j++) {
@@ -94,11 +99,6 @@ public class DraftCommand extends Command {
                             selectedPlayers.get(i).getName()));
                 }
             }
-        }
-
-        // Check for exactly 5 unique players
-        if (selectedPlayers.size() != REQUIRED_TEAM_SIZE) {
-            throw new CommandException(String.format(MESSAGE_INVALID_TEAM_SIZE, selectedPlayers.size()));
         }
 
         // Validate composition and generate result message
