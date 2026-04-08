@@ -110,6 +110,13 @@ public class CompareCommandTest {
     }
 
     @Test
+    public void execute_identicalIndices_throwsCommandException() {
+        CompareCommand compareCommand = new CompareCommand(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON);
+
+        assertCommandFailure(compareCommand, model, CompareCommand.MESSAGE_CANNOT_COMPARE_SAME_PLAYER);
+    }
+
+    @Test
     public void equals() {
         CompareCommand compareFirstSecondCommand = new CompareCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
         CompareCommand compareSecondFirstCommand = new CompareCommand(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON);
