@@ -32,7 +32,15 @@ public class Kills {
      * Returns true if a given string is a valid kills count.
      */
     public static boolean isValidKills(String test) {
-        return test.matches(VALIDATION_REGEX);
+        if (!test.matches(VALIDATION_REGEX)) {
+            return false;
+        }
+        try {
+            Integer.parseInt(test);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     /**
