@@ -61,7 +61,8 @@ public class DraftCommandTest {
                 model.getAddressBook().getPersonList().get(INDEX_FIFTH_PERSON.getZeroBased()));
 
         String expectedValidation = "\u2713 Draft Valid!\n"
-                + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)";
+                + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)\n"
+                + "Average Rank: GOLD III";
         String expectedMessage = String.format(DraftCommand.MESSAGE_SUCCESS, expectedValidation);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, null, null,
                 true, draftPlayers);
@@ -88,6 +89,7 @@ public class DraftCommandTest {
 
         String expectedValidation = "\u2717 Invalid Draft Composition\n"
                 + "Composition: TOP (2) | JUNGLE (0) | MID (1) | BOT (1) | SUPPORT (1)\n"
+                + "Average Rank: GOLD IV\n"
                 + "Issues: Too many TOP players, Missing JUNGLE player";
         String expectedMessage = String.format(DraftCommand.MESSAGE_SUCCESS, expectedValidation);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, null, null,
@@ -129,7 +131,8 @@ public class DraftCommandTest {
         DraftCommand draftCommand = new DraftCommand(List.of(), ignList);
 
         String expectedValidation = "\u2713 Draft Valid!\n"
-                + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)";
+                + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)\n"
+                + "Average Rank: GOLD III";
         String expectedMessage = String.format(DraftCommand.MESSAGE_SUCCESS, expectedValidation);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, null, null,
                 true, draftPlayers);
@@ -156,7 +159,8 @@ public class DraftCommandTest {
         DraftCommand draftCommand = new DraftCommand(List.of(INDEX_FIRST_PERSON, INDEX_THIRD_PERSON), ignList);
 
         String expectedValidation = "\u2713 Draft Valid!\n"
-                + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)";
+                + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)\n"
+                + "Average Rank: GOLD III";
         String expectedMessage = String.format(DraftCommand.MESSAGE_SUCCESS, expectedValidation);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, null, null,
                 true, expectedDraftPlayers);

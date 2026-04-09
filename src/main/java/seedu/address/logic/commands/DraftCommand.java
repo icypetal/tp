@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.CommandUtil;
 import seedu.address.logic.Messages;
+import seedu.address.logic.RankUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -129,6 +130,10 @@ public class DraftCommand extends Command {
             result += role + " (" + roleCounts.get(role) + ")";
             isFirst = false;
         }
+
+        // Average rank
+        String averageRank = RankUtil.calculateAverageRank(players);
+        result += "\nAverage Rank: " + averageRank;
 
         // Issues on one line (if any)
         if (!errors.isEmpty()) {
