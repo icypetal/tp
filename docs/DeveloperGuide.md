@@ -153,9 +153,16 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Implementation**
+## **Adding new features**
 
-This section describes some noteworthy details on how certain features are implemented.
+### Adding a new command
+
+To add a new command, here are two key things to note.
+
+* Ensure your new command and it's associated parser is added to `CommandRegistry.java`
+* Ensure your new command class has the public static variables `COMMAND_WORD`, `MESSAGE_USAGE`, `PARAMETERS`, and `EXAMPLE` are declared.
+
+Doing so ensures that the app's HelpWindow will be automatically populated with your newly added command's information. Having the `COMMAND_WORD` declared also ensures that the new command will be added into the `AddressBookParser.java`, meaning your command will be usable! No need to modify any other files or switch cases.
 
 --------------------------------------------------------------------------------------------------------------------
 
