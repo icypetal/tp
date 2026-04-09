@@ -684,8 +684,6 @@ testers are expected to do more *exploratory* testing.
 
 1. Updating player statistics
 
-   1. Prerequisites: List all players using the `list` command.
-
    1. Test case: `stats 1 ent/Ahri k/50 d/10 a/20`<br>
       Expected: Player 1's Ahri statistics are updated with the specified values.
 
@@ -748,5 +746,53 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `add n/Test p/abc e/test@test.com i/Test r/MID rank/GOLD I` (invalid phone format)<br>
       Expected: Error message indicating invalid phone format.
 
-   1. Test case: `add n/Test p/98765432 e/invalidemail i/Test r/MID rank/GOLD I` (invalid email format)<br>
-      Expected: Error message indicating invalid email format.
+    1. Test case: `add n/Test p/98765432 e/invalidemail i/Test r/MID rank/GOLD I` (invalid email format)<br>
+       Expected: Error message indicating invalid email format.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Effort**
+
+### Key Achievements
+**Data Model Expansion**
+- Extended the Person model from basic contact fields (name, phone, email, address, tags) to esports-specific data (InGameName, Role, Rank, EntityStatisticMap)
+- Created entirely new domain models: Entity, EntityStatisticMap, Match, MatchRecord, Result, PlayerInMatch
+- Implemented multi-entity statistics tracking where each player can have performance data across multiple game characters
+- Added 15+ new model classes across entity/, match/, and person/statistics/ packages
+
+**Command Architecture Enhancement**
+- Added 5 new commands: `compare`, `draft`, `filter`, `stats`, `result` with complex parsing logic
+- Implemented CommandRegistry mechanism, making adding new Commands easier. (No need to manually add new commands to a switch case.)
+
+**Game-Agnostic Entity System**
+- The default EntityReference used for input validation is League Of Legends based. However, the app is able to load custom `entities.json` files to change this validation. Thus, the app is able to be adapted by an advanced user to support a different esports games. The dynamic loading of images, as well as the fallback tooltip mechanisms further support this. 
+
+**Compare Command**
+- New UI element and command allowing flexible player comparison with side-by-side display of complete statistics across all entities.
+
+**Draft Command**
+- New UI element and command allowing for quick team composition validation and an overview of it's statistics.
+
+### Effort Required (High level overview)
+
+**Model Layer**: 15+ new classes including Entity, EntityStatisticMap, Match, MatchRecord, Result, PlayerInMatch, and supporting statistics classes (Kills, Deaths, Assists)
+
+**Logic Layer**: 5 new command classes (CompareCommand, DraftCommand, FilterCommand, StatsCommand, ResultCommand), corrseponding parsers, and other various utilities to support these classes.
+
+**Storage Layer**: 10+ new JSON adapters (JsonAdaptedEntity, JsonAdaptedEntityPathPair, JsonAdaptedEntityStatisticMap, JsonAdaptedMatch, JsonAdaptedPlayerInMatch, JsonAdaptedStatistics, etc.) and full integration into StorageManager
+
+**UI Layer**: 3 new UI components for the Compare, Draft, and Help commands.
+
+
+### Challenges Faced
+
+**Statistics Aggregation**: Designing efficient statistics tracking and display across multiple entities per player, with cumulative updates and overall performance calculation
+
+**Game-Agnostic Design**: Creating an extensible entity system that allows easy game switching while maintaining data integrity and validation.
+
+**UI Integration**: Displaying complex statistics data (multiple entities per player) in a clean, user-friendly interface without overwhelming the user.
+
+### Reuse and it's impact
+
+- CommandRegistry idea taken from IP, albeit modified to fit the AB3's implementation of separate Parser and Command classes
+- AB3 architecture and project scaffold for implementation of new commands, allowed for easy parsing of complex arguments, reducing setup and boilerplate effort.
