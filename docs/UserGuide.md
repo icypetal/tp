@@ -206,16 +206,18 @@ Example:
 
 Tests if a specific team composition is valid.
 
-Format: `draft (INDEX | i/IGN) [(INDEX | i/IGN)]…​`
+Format: `draft (INDEX | i/IGNNAME) (INDEX | i/IGNNAME) (INDEX | i/IGNNAME) (INDEX | i/IGNNAME) (INDEX | i/IGNNAME) …​`
 
 * Selects 5 players by their index numbers or in-game names (IGN).
 * A valid team requires exactly 5 players with one player per role (TOP, JUNGLE, MID, BOT, SUPPORT).
 * You can mix indices and IGNs in the same command.
+* The `i/` prefix can optionally be omitted for non-numeric IGNs (e.g., `PlayerA` instead of `i/PlayerA`).
 
 Examples:
 * `draft 1 2 3 4 5` Drafts players at indices 1-5.
 * `draft i/PlayerA i/PlayerB i/PlayerC i/PlayerD i/PlayerE` Drafts players by their IGNs.
 * `draft 1 2 i/CarlK77 4 i/ElleM55` Mixes indices and IGNs.
+* `draft 1 2 CarlK77 4 ElleM55` Alternative syntax with the `i/` prefix omitted for non-numeric IGNs.
 
 Example output:
 ![Sample output for valid composition](images/draftSuccess.png)
