@@ -611,38 +611,18 @@ testers are expected to do more *exploratory* testing.
 
 1. Adding players
 
-   1. Prerequisites: Use `clear` to start with an empty list.
+   1. Prerequisites: Player `JohnD88` and `BetsyCrowe`does not exist.
 
    1. Test case: `add n/John Doe p/98765432 e/johnd@example.com i/JohnD88 r/MID rank/GOLD I`<br>
       Expected: Player is added to the list with the specified details.
 
-   1. Test case: `add n/Betsy Crowe t/friend e/betsycrowe@example.com i/Betsycrowe r/BOT rank/PLATINUM p/1234567`<br>
+   1. Test case: `add n/Betsy Crowe t/friend e/betsycrowe@example.com i/Betsycrowe r/BOT rank/PLATINUM I p/1234567`<br>
       Expected: Player is added with the phone field in a different position.
-
-   1. Test case: `add n/Test p/invalid e/test@test.com i/Test r/INVALID rank/INVALID`<br>
-      Expected: Error message indicating invalid role and/or rank.
-
-   1. Test case: `add n/Duplicate p/98765432 e/johnd@example.com i/JohnD88 r/MID rank/GOLD` (after adding John Doe)<br>
-      Expected: Error message indicating duplicate player.
-
-   1. Other incorrect add commands to try: `add` (missing required fields), `add n/Test p/123` (invalid phone format)<br>
-      Expected: Appropriate error messages.
 
 1. Deleting players
 
-   1. Prerequisites: List all players using the `list` command. Multiple players in the list.
-
    1. Test case: `delete 1`<br>
       Expected: First player is deleted from the list. Details of the deleted player shown in the status message.
-
-   1. Test case: `delete 0`<br>
-      Expected: No player is deleted. Error details shown in the status message.
-
-   1. Test case: `delete 999` (number larger than list size)<br>
-      Expected: Error message indicating index is out of range.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`<br>
-      Expected: Appropriate error messages.
 
 1. Editing players
 
@@ -653,12 +633,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `edit 2 n/Betsy Crower t/`<br>
       Expected: Second player's name is updated and all tags are cleared.
-
-   1. Test case: `edit 3` (no fields to edit)<br>
-      Expected: Error message indicating at least one field must be provided.
-
-   1. Other incorrect edit commands to try: `edit 0 n/Test`, `edit 999 n/Test`<br>
-      Expected: Appropriate error messages.
 
 1. Listing all players
 
@@ -687,23 +661,12 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `filter t/friend`<br>
       Expected: Players tagged with "friend" are displayed.
 
-   1. Test case: `filter r/top r/jungle`<br>
-      Expected: Players with role "TOP" or "JUNGLE" are displayed.
-
-   1. Test case: `filter ent/Ahri ent/Yasuo`<br>
-      Expected: Players who have statistics for entity "Ahri" or "Yasuo" are displayed.
-
    1. Test case: `filter t/pro r/bot ent/Jinx`<br>
       Expected: Players who are tagged "pro", have role "BOT", AND have statistics for entity "Jinx".
-
-   1. Test case: `filter t/nonexistent`<br>
-      Expected: Empty list is displayed.
 
 ### Sports and analytics
 
 1. Comparing players
-
-   1. Prerequisites: List all players using the `list` command.
 
    1. Test case: `compare 1 2`<br>
       Expected: Side-by-side comparison of players at indices 1 and 2 is displayed.
@@ -711,30 +674,13 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `compare i/AlexY42 2` (assuming AlexY42 exists)<br>
       Expected: Side-by-side comparison of player with IGN "AlexY42" and player at index 2.
 
-   1. Test case: `compare 1 1`<br>
-      Expected: Error message indicating different players must be selected.
-
-   1. Test case: `compare 999 1` or `compare i/NonExistent 1`<br>
-      Expected: Error message indicating player not found.
-
 1. Drafting teams
-
-   1. Prerequisites: List all players using the `list` command with players in all roles.
 
    1. Test case: `draft 1 2 3 4 5` (assuming indices 1-5 cover all roles: TOP, JUNGLE, MID, BOT, SUPPORT)<br>
       Expected: Success message showing valid team composition with role assignments.
 
    1. Test case: `draft i/PlayerA i/PlayerB i/PlayerC i/PlayerD i/PlayerE`<br>
       Expected: Success message showing valid team composition (assuming 5 different players with valid roles).
-
-   1. Test case: `draft 1 2 3 4 4` (duplicate player)<br>
-      Expected: Error message indicating duplicate players.
-
-   1. Test case: `draft 1 2 3 4 6` (missing a role)<br>
-      Expected: Error message indicating invalid team composition with missing/duplicate roles.
-
-   1. Other incorrect draft commands to try: `draft 1 2 3 4`, `draft 1 2 3 4 5 6`<br>
-      Expected: Appropriate error messages.
 
 1. Updating player statistics
 
@@ -746,15 +692,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `stats 1 ent/Ahri k/10` (adding to existing stats)<br>
       Expected: Player 1's Ahri kills are increased by 10 (cumulative).
 
-   1. Test case: `stats 1` (no entity or stats provided)<br>
-      Expected: Error message indicating entity and at least one stat field must be provided.
-
-   1. Test case: `stats 999 ent/Ahri k/10`<br>
-      Expected: Error message indicating player not found.
-
 1. Adding match results
-
-   1. Prerequisites: Multiple players exist in the list.
 
    1. Test case: `result w/WIN i/PlayerA ent/Ahri s/10-2-8 i/PlayerB ent/Leona s/1-1-12 i/PlayerC ent/Evelynn s/5-6-15 i/PlayerD ent/Irelia s/2-19-4 i/PlayerE ent/Kayn s/6-3-8`<br>
       Expected: Match is recorded with WIN result and all player statistics are updated.
@@ -784,10 +722,10 @@ testers are expected to do more *exploratory* testing.
 1. Dealing with missing/corrupted data files
 
    1. Close the application. Delete or rename the `data/addressbook.json` file. Re-launch.<br>
-      Expected: Application starts with an empty player list or creates a new data file.
+      Expected: Application starts with a preset player list and creates a new data file.
 
    1. Close the application. Corrupt the `data/addressbook.json` file (e.g., add invalid JSON). Re-launch.<br>
-      Expected: Application starts with an empty player list and a new valid data file is created.
+      Expected: Application starts with a preset player list and a new valid data file is created.
 
 ### Error handling
 
@@ -804,11 +742,11 @@ testers are expected to do more *exploratory* testing.
 
 1. Invalid parameter values
 
-   1. Test case: `add n/12345 p/98765432 e/test@test.com i/Test r/MID rank/GOLD` (name contains only numbers)<br>
+   1. Test case: `add n/12345 p/98765432 e/test@test.com i/Test r/MID rank/GOLD I` (name contains only numbers)<br>
       Expected: Player is added (name validation allows alphanumeric characters).
 
-   1. Test case: `add n/Test p/abc e/test@test.com i/Test r/MID rank/GOLD` (invalid phone format)<br>
+   1. Test case: `add n/Test p/abc e/test@test.com i/Test r/MID rank/GOLD I` (invalid phone format)<br>
       Expected: Error message indicating invalid phone format.
 
-   1. Test case: `add n/Test p/98765432 e/invalidemail i/Test r/MID rank/GOLD` (invalid email format)<br>
+   1. Test case: `add n/Test p/98765432 e/invalidemail i/Test r/MID rank/GOLD I` (invalid email format)<br>
       Expected: Error message indicating invalid email format.
