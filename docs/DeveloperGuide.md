@@ -755,8 +755,6 @@ testers are expected to do more *exploratory* testing.
 
 ### Key Achievements
 **Data Model Expansion**
-- Extended the Person model from basic contact fields (name, phone, email, address, tags) to esports-specific data (InGameName, Role, Rank, EntityStatisticMap)
-- Created entirely new domain models: Entity, EntityStatisticMap, Match, MatchRecord, Result, PlayerInMatch
 - Implemented multi-entity statistics tracking where each player can have performance data across multiple game characters
 - Added 15+ new model classes across entity/, match/, and person/statistics/ packages
 
@@ -767,12 +765,6 @@ testers are expected to do more *exploratory* testing.
 **Game-Agnostic Entity System**
 - The default EntityReference used for input validation is League Of Legends based. However, the app is able to load custom `entities.json` files to change this validation. Thus, the app is able to be adapted by an advanced user to support a different esports games. The dynamic loading of images, as well as the fallback tooltip mechanisms further support this. 
 
-**Compare Command**
-- New UI element and command allowing flexible player comparison with side-by-side display of complete statistics across all entities.
-
-**Draft Command**
-- New UI element and command allowing for quick team composition validation and an overview of it's statistics.
-
 ### Effort Required (High level overview)
 
 **Model Layer**: 15+ new classes including Entity, EntityStatisticMap, Match, MatchRecord, Result, PlayerInMatch, and supporting statistics classes (Kills, Deaths, Assists)
@@ -782,7 +774,6 @@ testers are expected to do more *exploratory* testing.
 **Storage Layer**: 10+ new JSON adapters (JsonAdaptedEntity, JsonAdaptedEntityPathPair, JsonAdaptedEntityStatisticMap, JsonAdaptedMatch, JsonAdaptedPlayerInMatch, JsonAdaptedStatistics, etc.) and full integration into StorageManager
 
 **UI Layer**: 3 new UI components for the Compare, Draft, and Help commands.
-
 
 ### Challenges Faced
 
