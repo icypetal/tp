@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IGN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_KILLS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESULT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATS;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -29,16 +30,20 @@ public class ResultCommand extends Command {
             + "[" + PREFIX_DATE + "yyyy-MM-dd] "
             + PREFIX_IGN + "IGN (must exist in the list) "
             + PREFIX_ENTITY + "ENTITY (must exist in the list) "
-            + PREFIX_KILLS + "KILLS "
-            + PREFIX_DEATHS + "DEATHS "
-            + PREFIX_ASSISTS + "ASSISTS\n"
+            + PREFIX_STATS + "KILLS-DEATHS-ASSISTS\n"
             + "The number of names, entities, and statistics must match.\n";
 
     public static final String EXAMPLE = "Example: " + COMMAND_WORD + " " + PREFIX_RESULT + "WIN "
             + PREFIX_IGN + "IGN_1 " + PREFIX_ENTITY + "ENTITY1 "
-            + PREFIX_KILLS + "20 " + PREFIX_DEATHS + "10 " + PREFIX_ASSISTS + "30 "
+            + PREFIX_KILLS + "3 " + PREFIX_DEATHS + "16 " + PREFIX_ASSISTS + "12 "
             + PREFIX_IGN + "IGN_2 " + PREFIX_ENTITY + "ENTITY2 "
-            + PREFIX_KILLS + "0 " + PREFIX_DEATHS + "500 " + PREFIX_ASSISTS + "0 ";
+            + PREFIX_KILLS + "5 " + PREFIX_DEATHS + "7 " + PREFIX_ASSISTS + "4 "
+            + PREFIX_IGN + "IGN_3 " + PREFIX_ENTITY + "ENTITY3 "
+            + PREFIX_KILLS + "14 " + PREFIX_DEATHS + "17 " + PREFIX_ASSISTS + "15 "
+            + PREFIX_IGN + "IGN_4 " + PREFIX_ENTITY + "ENTITY4 "
+            + PREFIX_KILLS + "3 " + PREFIX_DEATHS + "19 " + PREFIX_ASSISTS + "14 "
+            + PREFIX_IGN + "IGN_5 " + PREFIX_ENTITY + "ENTITY5 "
+            + PREFIX_KILLS + "15 " + PREFIX_DEATHS + "6 " + PREFIX_ASSISTS + "12 ";
 
     public static final String MESSAGE_SUCCESS = "New match added: %1$s";
     public static final String MESSAGE_FIELD_QUANTITY_MISMATCH =

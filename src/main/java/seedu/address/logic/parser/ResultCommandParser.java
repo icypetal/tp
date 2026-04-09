@@ -1,13 +1,11 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ASSISTS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEATHS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IGN;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_KILLS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESULT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATS;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -35,10 +33,9 @@ public class ResultCommandParser implements Parser<ResultCommand> {
     @Override
     public ResultCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_RESULT, PREFIX_DATE, PREFIX_IGN, PREFIX_ENTITY,
-                    PREFIX_KILLS, PREFIX_DEATHS, PREFIX_ASSISTS);
-        if (!arePrefixesPresent(argMultimap, PREFIX_RESULT, PREFIX_IGN, PREFIX_ENTITY, PREFIX_KILLS,
-                PREFIX_DEATHS, PREFIX_ASSISTS) || !argMultimap.getPreamble().isEmpty()) {
+                ArgumentTokenizer.tokenize(args, PREFIX_RESULT, PREFIX_DATE, PREFIX_IGN, PREFIX_ENTITY, PREFIX_STATS);
+        if (!arePrefixesPresent(argMultimap, PREFIX_RESULT, PREFIX_IGN, PREFIX_ENTITY, PREFIX_STATS)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ResultCommand.PARAMETERS));
         }
 
@@ -46,11 +43,9 @@ public class ResultCommandParser implements Parser<ResultCommand> {
         Result result = ParserUtil.parseResult(argMultimap.getValue(PREFIX_RESULT).get());
         List<String> argIgn = argMultimap.getAllValues(PREFIX_IGN);
         List<String> argEntities = argMultimap.getAllValues(PREFIX_ENTITY);
-        List<String> argKills = argMultimap.getAllValues(PREFIX_KILLS);
-        List<String> argDeaths = argMultimap.getAllValues(PREFIX_DEATHS);
-        List<String> argAssists = argMultimap.getAllValues(PREFIX_ASSISTS);
+        List<String> argStatistics = argMultimap.getAllValues(PREFIX_STATS);
 
-        PlayersInMatch players = ParserUtil.parsePlayers(argIgn, argEntities, argKills, argDeaths, argAssists);
+        PlayersInMatch players = ParserUtil.parsePlayers(argIgn, argEntities, argStatistics);
 
         Match match;
 

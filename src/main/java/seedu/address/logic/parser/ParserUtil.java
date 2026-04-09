@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -38,6 +40,8 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_IDENTIFIER =
         "Invalid identifier. Must be either a positive integer index or an IGN prefixed with 'i/'.";
+    public static final String MESSAGE_INVALID_STATISTICS_FORMAT =
+        "Invalid statistics. The format of statistics is s/kills-deaths-assists";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -270,32 +274,48 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code argIgn, argKills, argDeaths, argAssists} into a {@code PlayersInMatch}.
+     * Parses {@code argStatistics} into a {@code Statistics}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code argIgn, argKills, argDeaths, argAssists} are invalid.
+     * @throws ParseException if the given {@code argStatistics} is invalid.
      */
-    public static PlayersInMatch parsePlayers(List<String> argIgn, List<String> argEntities, List<String> argKills,
-            List<String> argDeaths, List<String> argAssists) throws ParseException {
+    public static Statistics parseStatistics(String argStatistics) throws ParseException {
+        String regex = "^(\\d+)-(\\d+)-(\\d+)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(argStatistics);
+        if (!matcher.matches()) {
+            throw new ParseException(MESSAGE_INVALID_STATISTICS_FORMAT);
+        }
+
+        Kills kills = ParserUtil.parseKills(matcher.group(1));
+        Deaths deaths = ParserUtil.parseDeaths(matcher.group(2));
+        Assists assists = ParserUtil.parseAssists(matcher.group(3));
+
+        return new Statistics.Builder()
+                .withKills(kills)
+                .withDeaths(deaths)
+                .withAssists(assists)
+                .build();
+    }
+
+    /**
+     * Parses {@code argIgn, argEntities, argStatistics} into a {@code PlayersInMatch}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code argIgn, argStatistics} are invalid.
+     */
+    public static PlayersInMatch parsePlayers(List<String> argIgn, List<String> argEntities,
+                List<String> argStatistics) throws ParseException {
         int noPlayers = argIgn.size();
 
-        if (noPlayers != argKills.size() || noPlayers != argDeaths.size()
-                || noPlayers != argAssists.size() || noPlayers != argEntities.size()) {
+        if (noPlayers != argStatistics.size() || noPlayers != argEntities.size()) {
             throw new ParseException(String.format(MESSAGE_FIELD_QUANTITY_MISMATCH));
         }
         List<PlayerInMatch> players = new ArrayList<>(noPlayers);
         for (int i = 0; i < noPlayers; i++) {
             InGameName ign = ParserUtil.parseIgn(argIgn.get(i));
             Entity entity = ParserUtil.parseEntity(argEntities.get(i));
-            Kills kills = ParserUtil.parseKills(argKills.get(i));
-            Deaths deaths = ParserUtil.parseDeaths(argDeaths.get(i));
-            Assists assists = ParserUtil.parseAssists(argAssists.get(i));
-
-            Statistics statistics = new Statistics.Builder()
-                    .withKills(kills)
-                    .withDeaths(deaths)
-                    .withAssists(assists)
-                    .build();
+            Statistics statistics = parseStatistics(argStatistics.get(i));
             players.add(new PlayerInMatch(ign, statistics, entity));
         }
 
