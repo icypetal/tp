@@ -29,7 +29,7 @@ public class RankUtilTest {
 
     @Test
     public void calculateAverageRank_differentDivisions_roundsCorrectly() {
-        // GOLD I (3*4+0=12) + GOLD III (3*4+2=14) = 26/2 = 13 = GOLD II
+        // GOLD I (3*4+3=15) + GOLD III (3*4+1=13) = 28/2 = 14 = GOLD II
         Person player1 = new PersonBuilder().withRank("GOLD I").build();
         Person player2 = new PersonBuilder().withRank("GOLD III").build();
         String average = RankUtil.calculateAverageRank(List.of(player1, player2));
@@ -38,22 +38,22 @@ public class RankUtilTest {
 
     @Test
     public void calculateAverageRank_differentTiers_success() {
-        // SILVER IV (2*4+3=11) + GOLD I (3*4+0=12) = 23/2 = 11.5 -> rounds to 12 = GOLD I
+        // SILVER IV (2*4+0=8) + GOLD I (3*4+3=15) = 23/2 = 11.5 -> rounds to 12 = GOLD IV
         Person player1 = new PersonBuilder().withRank("SILVER IV").build();
         Person player2 = new PersonBuilder().withRank("GOLD I").build();
         String average = RankUtil.calculateAverageRank(List.of(player1, player2));
-        assertEquals("GOLD I", average);
+        assertEquals("GOLD IV", average);
     }
 
     @Test
     public void calculateAverageRank_multiplePlayersWithTopRanks_success() {
-        // PLATINUM IV (4*4+3=19) + DIAMOND I (5*4+0=20) + MASTER (6*4=24)
-        // = (19 + 20 + 24) / 3 = 63 / 3 = 21 = 21/4 = 5, 21%4 = 1 = DIAMOND II
+        // PLATINUM IV (4*4+0=16) + DIAMOND I (5*4+3=23) + MASTER (6*4=24)
+        // = (16 + 23 + 24) / 3 = 63 / 3 = 21 = 21/4 = 5, 21%4 = 1, inverted = 3-1=2 = DIAMOND III
         Person player1 = new PersonBuilder().withRank("PLATINUM IV").build();
         Person player2 = new PersonBuilder().withRank("DIAMOND I").build();
         Person player3 = new PersonBuilder().withRank("MASTER").build();
         String average = RankUtil.calculateAverageRank(List.of(player1, player2, player3));
-        assertEquals("DIAMOND II", average);
+        assertEquals("DIAMOND III", average);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class RankUtilTest {
         Person bot = new PersonBuilder().withRank("PLATINUM I").build();
         Person support = new PersonBuilder().withRank("SILVER IV").build();
 
-        // (12 + 13 + 14 + 16 + 11) / 5 = 66 / 5 = 13.2 -> rounds to 13 = GOLD II
+        // (15 + 14 + 13 + 19 + 8) / 5 = 69 / 5 = 13.8 -> rounds to 14 = GOLD II
         String average = RankUtil.calculateAverageRank(List.of(top, jungle, mid, bot, support));
         assertEquals("GOLD II", average);
     }
@@ -80,20 +80,20 @@ public class RankUtilTest {
 
     @Test
     public void calculateAverageRank_diamondToMaster_roundsUp() {
-        // DIAMOND IV (5*4+3=23) + MASTER (6*4=24) = 47/2 = 23.5 -> rounds to 24 = MASTER
+        // DIAMOND IV (5*4+0=20) + MASTER (6*4=24) = 44/2 = 22 = 22/4=5, 22%4=2, inverted = DIAMOND II
         Person player1 = new PersonBuilder().withRank("DIAMOND IV").build();
         Person player2 = new PersonBuilder().withRank("MASTER").build();
         String average = RankUtil.calculateAverageRank(List.of(player1, player2));
-        assertEquals("MASTER", average);
+        assertEquals("DIAMOND II", average);
     }
 
     @Test
     public void calculateAverageRank_ironToGold_success() {
-        // IRON I (0*4+0=0) + GOLD I (3*4+0=12) = 12/2 = 6 = BRONZE III (1*4+2)
+        // IRON I (0*4+3=3) + GOLD I (3*4+3=15) = 18/2 = 9 = 9/4=2, 9%4=1, inverted = SILVER III
         Person player1 = new PersonBuilder().withRank("IRON I").build();
         Person player2 = new PersonBuilder().withRank("GOLD I").build();
         String average = RankUtil.calculateAverageRank(List.of(player1, player2));
-        assertEquals("BRONZE III", average);
+        assertEquals("SILVER III", average);
     }
 
     @Test

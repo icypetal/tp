@@ -36,15 +36,16 @@ public class RankUtil {
 
     /**
      * Converts a rank to its numeric value.
-     * Formula: tierValue * 4 + divisionValue
-     * This creates a continuous scale where divisions are sub-values of a tier.
+     * Formula: tierValue * 4 + (3 - divisionValue)
+     * Division I (0) is higher rank than Division IV (3), so we invert the division value.
+     * This creates a continuous scale where higher numbers = better ranks.
      *
      * @param rank the rank to convert
      * @return numeric value of the rank
      */
     private static double rankToNumericValue(Rank rank) {
         double tierValue = rank.tier.getTierValue() * 4;
-        double divisionValue = rank.division != null ? rank.division.getDivisionValue() : 0;
+        double divisionValue = rank.division != null ? (3 - rank.division.getDivisionValue()) : 0;
         return tierValue + divisionValue;
     }
 
@@ -78,7 +79,9 @@ public class RankUtil {
             return tier.toString();
         }
 
-        Division division = Division.values()[Math.min(divisionIndex, 3)];
+        // Since we use (3 - divisionValue) in the formula, we need to invert it back
+        int actualDivisionIndex = Math.max(0, 3 - divisionIndex);
+        Division division = Division.values()[Math.min(actualDivisionIndex, 3)];
         return tier.toString() + " " + division.toString();
     }
 }
