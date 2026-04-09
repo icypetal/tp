@@ -344,22 +344,13 @@ If you ever get stuck on a command, you can use the `help` command!
 ## Step 1: Launch DraftDeck and import the old roster.
 {:.no_toc}
 
-First, download the tutorial data file, found here.
-Download and unzip it. It should contain a `data` folder. Use it to overwrite the existing the data folder.
-Next, launch the application.
+If this is your first time launching the app, then this is done for you already!
+
+If not, simply close the app, delete the `data` folder, and relaunch it.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-If there is no data folder that exists, that's fine! It just means you haven't launched the app before. You can just paste the folder in and it will still work correctly.
+The rest of the screenshots in this tutorial will assume you have installed the release that comes with images. If you did not, not to worry - the images will simply be replaced with letters.
 </div>
-
-## Step 1.5: Install images (Optional)
-{:.no_toc}
-
-This step is optional, but recommended.
-If you downloaded the release with the image pack, simply drop the `image` folder the same way you dropped the `data` folder, then restart the app. The final directory containing the app should look like this.
-
-
-The rest of the screenshots in this tutorial will assume you have installed the `image` folder.
 
 ## Step 2: View Your Complete Roster
 {:.no_toc}
