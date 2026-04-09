@@ -295,7 +295,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `DraftDeck` and the **Actor** is the `user`, unless specified otherwise)
 
-  **Use case: UC01 - Add a player**
+**Use case: UC01 - Add a player**
 
   **Preconditions**
 
@@ -335,7 +335,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-  **Use case: UC02 - Delete a player**
+**Use case: UC02 - Delete a player**
 
   **Guarantees**
 
@@ -359,7 +359,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 1.
 
-  **Use case: UC03 - Filter players**
+**Use case: UC03 - Filter players**
 
   **Guarantees**
 
