@@ -563,16 +563,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 players without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 players with command response time not exceeding 3 seconds for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  Data should be automatically saved to JSON files after every modifying command (add, delete, edit, result, stats).
-5.  No data loss should occur if the application crashes unexpectedly (data should be saved before each command completes).
+4.  Data should be automatically saved to JSON files after every modifying command (add, delete, edit, result, stats, clear).
+5.  No data loss should occur upon unexpected application crashes, provided the crash occurs after a command has completed and data has been saved to storage.
 6.  The application should validate all input data before saving (phone/email format, rank validity, role types).
 7.  The application should not crash if provided with invalid commands; instead, it should display appropriate error messages.
 8.  New commands can be added by creating command and parser classes and registering them in CommandRegistry without modifying existing command handling logic.
-9. Should support up to 50 different entities/champions per player without performance degradation.
-10. Should support up to 100 tags per player without performance degradation.
-11. Should maintain a match history of up to 500 matches without affecting application performance.
+9. Should support up to 50 different entities/champions per player with command response time not exceeding 2 seconds.
+10. Should support up to 100 tags per player with command response time not exceeding 2 seconds.
+11. Should maintain a match history of up to 500 matches with command response time not exceeding 2 seconds.
 
 
 ### Glossary
