@@ -13,14 +13,11 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_KILLS_SET_2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATS_SET_1;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.StatsCommand.EditStatsDescriptor;
 import seedu.address.model.AddressBook;
@@ -38,7 +35,7 @@ public class StatsCommandTest {
 
     @Test
     public void execute_statisticsSpecifiedUnfilteredList_success() {
-        Person firstPerson = model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person firstPerson = model.getAddressBook().getPersonList().get(0);
         Person editedPerson = new PersonBuilder(firstPerson).withEntityStatistics(VALID_ENTITY_STATISTIC_MAP).build();
         EditStatsDescriptor descriptor = new EditStatsDescriptorBuilder()
                 .withEntity(VALID_ENTITY_1)
@@ -46,7 +43,7 @@ public class StatsCommandTest {
                 .withDeaths(VALID_DEATHS_SET_1)
                 .withAssists(VALID_ASSISTS_SET_1)
                 .build();
-        StatsCommand statsCommand = new StatsCommand(INDEX_FIRST_PERSON, descriptor);
+        StatsCommand statsCommand = new StatsCommand("1", descriptor);
 
         String expectedMessage = String.format(StatsCommand.MESSAGE_STATS_SUCCESS, Messages.format(editedPerson));
         expectedMessage += "\n" + Messages.MESSAGE_GLOBAL_INDEX_COMMAND_CUE;
@@ -59,7 +56,7 @@ public class StatsCommandTest {
 
     @Test
     public void execute_statistics_personWithoutExistingEntityEntry() {
-        Person firstPerson = model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person firstPerson = model.getAddressBook().getPersonList().get(0);
         Person emptyEntityMapPerson = new PersonBuilder(firstPerson)
             .withEntityStatistics(new EntityStatisticMap()).build();
         model.setPerson(firstPerson, emptyEntityMapPerson); //reset's first person's entity statistic map to be empty
@@ -71,7 +68,7 @@ public class StatsCommandTest {
                 .withDeaths(VALID_DEATHS_SET_1)
                 .withAssists(VALID_ASSISTS_SET_1)
                 .build();
-        StatsCommand statsCommand = new StatsCommand(INDEX_FIRST_PERSON, descriptor);
+        StatsCommand statsCommand = new StatsCommand("1", descriptor);
 
         String expectedMessage = String.format(StatsCommand.MESSAGE_STATS_SUCCESS, Messages.format(editedPerson));
         expectedMessage += "\n" + Messages.MESSAGE_GLOBAL_INDEX_COMMAND_CUE;
@@ -84,7 +81,7 @@ public class StatsCommandTest {
 
     @Test
     public void execute_statistics_personWithExistingEntityEntry() {
-        Person firstPerson = model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person firstPerson = model.getAddressBook().getPersonList().get(0);
         Person filledEntityMapPerson = new PersonBuilder(firstPerson)
             .withEntityStatistics(VALID_ENTITY_STATISTIC_MAP).build();
         model.setPerson(firstPerson, filledEntityMapPerson);
@@ -100,7 +97,7 @@ public class StatsCommandTest {
                 .withDeaths(VALID_DEATHS_SET_1)
                 .withAssists(VALID_ASSISTS_SET_1)
                 .build();
-        StatsCommand statsCommand = new StatsCommand(INDEX_FIRST_PERSON, descriptor);
+        StatsCommand statsCommand = new StatsCommand("1", descriptor);
 
         String expectedMessage = String.format(StatsCommand.MESSAGE_STATS_SUCCESS, Messages.format(editedPerson));
         expectedMessage += "\n" + Messages.MESSAGE_GLOBAL_INDEX_COMMAND_CUE;
@@ -113,25 +110,25 @@ public class StatsCommandTest {
 
     @Test
     public void equals() {
-        final StatsCommand statsFirstCommand = new StatsCommand(INDEX_FIRST_PERSON, STATS_DESC_SET_1);
+        final StatsCommand statsFirstCommand = new StatsCommand("1", STATS_DESC_SET_1);
 
         // same values -> returns true
-        StatsCommand statsFirstCommandCopy = new StatsCommand(INDEX_FIRST_PERSON, STATS_DESC_SET_1);
+        StatsCommand statsFirstCommandCopy = new StatsCommand("1", STATS_DESC_SET_1);
         Assertions.assertTrue(statsFirstCommand.equals(statsFirstCommandCopy));
 
         // different index -> returns false
         Assertions.assertFalse(statsFirstCommand
-            .equals(new StatsCommand(INDEX_SECOND_PERSON, STATS_DESC_SET_1)));
+            .equals(new StatsCommand("2", STATS_DESC_SET_1)));
 
         // different descriptor -> returns false
         EditStatsDescriptor differentDescriptor = new EditStatsDescriptorBuilder()
             .withEntity(VALID_ENTITY_1).withKills("999").build();
         Assertions.assertFalse(statsFirstCommand
-            .equals(new StatsCommand(INDEX_FIRST_PERSON, differentDescriptor)));
+            .equals(new StatsCommand("1", differentDescriptor)));
     }
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getAddressBook().getPersonList().size() + 1);
+        String outOfBoundIndex = String.valueOf(model.getAddressBook().getPersonList().size() + 1);
         EditStatsDescriptor descriptor = new EditStatsDescriptorBuilder()
                 .withEntity(VALID_ENTITY_1)
                 .withKills(VALID_KILLS_SET_1)

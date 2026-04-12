@@ -5,12 +5,7 @@ import static seedu.address.logic.commands.DraftCommand.MESSAGE_INVALID_IGN_EMPT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IGN;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_IDENTIFIER;
 
 import java.util.List;
 
@@ -42,12 +37,7 @@ public class DraftCommandParserTest {
 
     @Test
     public void parse_validIndexArgs_success() {
-        DraftCommand expectedCommand = new DraftCommand(List.of(
-                INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON,
-                INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON,
-                INDEX_FIFTH_PERSON), List.of());
+        DraftCommand expectedCommand = new DraftCommand(List.of("1", "2", "3", "4", "5"));
 
         assertParseSuccess(parser, "1 2 3 4 5", expectedCommand);
         assertParseSuccess(parser, "  1   2  3  4   5  ", expectedCommand);
@@ -55,8 +45,8 @@ public class DraftCommandParserTest {
 
     @Test
     public void parse_validIgnArgs_success() {
-        DraftCommand expectedCommand = new DraftCommand(List.of(),
-                List.of("AliceP99", "BensonM88", "CarlK77", "DanielM66", "ElleM55"));
+        DraftCommand expectedCommand = new DraftCommand(List.of(
+                "i/AliceP99", "i/BensonM88", "i/CarlK77", "i/DanielM66", "i/ElleM55"));
 
         assertParseSuccess(parser, buildIgnCommand("AliceP99", "BensonM88", "CarlK77", "DanielM66", "ElleM55"),
                 expectedCommand);
@@ -65,9 +55,7 @@ public class DraftCommandParserTest {
     @Test
     public void parse_validHybridArgs_success() {
         DraftCommand expectedCommand = new DraftCommand(List.of(
-                INDEX_FIRST_PERSON,
-                INDEX_THIRD_PERSON),
-                List.of("BensonM88", "DanielM66", "ElleM55"));
+                "1", "i/BensonM88", "i/DanielM66", "i/ElleM55", "3"));
 
         assertParseSuccess(parser,
                 "1 " + buildIgnCommand("BensonM88", "DanielM66", "ElleM55") + " 3",
@@ -82,7 +70,7 @@ public class DraftCommandParserTest {
 
     @Test
     public void parse_invalidIndex_failure() {
-        assertParseFailure(parser, "0", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "0", MESSAGE_INVALID_IDENTIFIER);
     }
 
     @Test

@@ -42,10 +42,10 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = "Edits the details of the person identified "
-            + "by the index number used in the list. "
+            + "by the index number or IGN. "
             + "Existing values will be overwritten by the input values.";
 
-    public static final String PARAMETERS = "Parameters: INDEX (must be a positive integer) "
+    public static final String PARAMETERS = "Parameters: (INDEX | i/IGN) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "

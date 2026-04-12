@@ -12,11 +12,9 @@ import static seedu.address.logic.commands.CommandTestUtil.KILLS_DESC_SET_1;
 import static seedu.address.logic.commands.CommandTestUtil.STATS_DESC_SET_1;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.StatsCommand;
 import seedu.address.model.entity.Entity;
 import seedu.address.model.person.statistics.Assists;
@@ -50,11 +48,8 @@ public class StatsCommandParserTest {
         // zero index
         assertParseFailure(parser, "0" + KILLS_DESC_SET_1, MESSAGE_INVALID_FORMAT);
 
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+        // non-numeric without i/ prefix
+        assertParseFailure(parser, "abc" + KILLS_DESC_SET_1, MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -71,11 +66,10 @@ public class StatsCommandParserTest {
 
     @Test
     public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + ENTITY_DESC_1 + " "
+        String userInput = "1 " + ENTITY_DESC_1 + " "
             + KILLS_DESC_SET_1 + DEATHS_DESC_SET_1 + ASSISTS_DESC_SET_1;
 
-        StatsCommand expectedCommand = new StatsCommand(targetIndex, STATS_DESC_SET_1);
+        StatsCommand expectedCommand = new StatsCommand("1", STATS_DESC_SET_1);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

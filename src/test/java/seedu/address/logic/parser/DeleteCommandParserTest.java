@@ -24,7 +24,7 @@ public class DeleteCommandParserTest {
         // Test with index
         assertParseSuccess(parser, "1", new DeleteCommand("1"));
         // Test with IGN
-        assertParseSuccess(parser, "i/PlayerName", new DeleteCommand("PlayerName"));
+        assertParseSuccess(parser, "i/PlayerName", new DeleteCommand("i/PlayerName"));
     }
 
     @Test

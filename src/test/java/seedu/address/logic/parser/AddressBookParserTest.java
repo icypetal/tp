@@ -103,7 +103,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " "
                 + PREFIX_ENTITY + VALID_ENTITY_NAME_1 + " "
                 + PREFIX_KILLS + kills);
-        assertEquals(new StatsCommand(INDEX_FIRST_PERSON, descriptor), command);
+        assertEquals(new StatsCommand("1", descriptor), command);
     }
 
     @Test

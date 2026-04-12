@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_IGN;
 import java.util.ArrayList;
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DraftCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -32,25 +31,26 @@ public class DraftCommandParser implements Parser<DraftCommand> {
         }
 
         String[] argStrings = trimmedArgs.split("\\s+");
-        List<Index> indices = new ArrayList<>();
-        List<String> igns = new ArrayList<>();
+        List<String> identifiers = new ArrayList<>();
         String prefix = PREFIX_IGN.getPrefix();
 
         for (String argString : argStrings) {
+            // Handle i/ prefix: validate non-empty, then keep prefix intact
             if (argString.startsWith(prefix)) {
                 String ign = argString.substring(prefix.length());
                 if (ign.isEmpty()) {
                     throw new ParseException(MESSAGE_INVALID_IGN_EMPTY);
                 }
-                igns.add(ign);
-            } else if (!argString.matches("\\d+")) {
-                igns.add(argString);
+                identifiers.add(argString); // Keep i/ prefix intact
+            } else if (argString.matches("\\d+")) {
+                // Numeric index
+                identifiers.add(ParserUtil.parseIdentifier(argString));
             } else {
-                Index index = ParserUtil.parseIndex(argString);
-                indices.add(index);
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DraftCommand.PARAMETERS));
             }
         }
 
-        return new DraftCommand(indices, igns);
+        return new DraftCommand(identifiers);
     }
 }

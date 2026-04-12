@@ -24,9 +24,9 @@ public class CompareCommandParserTest {
         // Test with indices
         assertParseSuccess(parser, "1 2", new CompareCommand("1", "2"));
         // Test with IGNs
-        assertParseSuccess(parser, "i/Player1 i/Player2", new CompareCommand("Player1", "Player2"));
+        assertParseSuccess(parser, "i/Player1 i/Player2", new CompareCommand("i/Player1", "i/Player2"));
         // Test with mixed identifiers
-        assertParseSuccess(parser, "1 i/Player2", new CompareCommand("1", "Player2"));
+        assertParseSuccess(parser, "1 i/Player2", new CompareCommand("1", "i/Player2"));
     }
 
     @Test

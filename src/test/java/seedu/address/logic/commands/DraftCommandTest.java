@@ -34,25 +34,19 @@ public class DraftCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void constructor_nullIndices_throwsNullPointerException() {
+    public void constructor_nullIdentifiers_throwsNullPointerException() {
         seedu.address.testutil.Assert.assertThrows(NullPointerException.class, () ->
-                new DraftCommand(null, List.of()));
-    }
-
-    @Test
-    public void constructor_nullIgns_throwsNullPointerException() {
-        seedu.address.testutil.Assert.assertThrows(NullPointerException.class, () ->
-                new DraftCommand(List.of(), null));
+                new DraftCommand(null));
     }
 
     @Test
     public void execute_validDraft_success() {
         DraftCommand draftCommand = new DraftCommand(List.of(
-                INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON,
-                INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON,
-                INDEX_FIFTH_PERSON), List.of());
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                String.valueOf(INDEX_SECOND_PERSON.getOneBased()),
+                String.valueOf(INDEX_THIRD_PERSON.getOneBased()),
+                String.valueOf(INDEX_FOURTH_PERSON.getOneBased()),
+                String.valueOf(INDEX_FIFTH_PERSON.getOneBased())));
 
         List<Person> draftPlayers = List.of(
                 model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased()),
@@ -76,11 +70,11 @@ public class DraftCommandTest {
     @Test
     public void execute_invalidDraftComposition_successWithIssues() {
         DraftCommand draftCommand = new DraftCommand(List.of(
-                INDEX_FIRST_PERSON,
-                INDEX_SIXTH_PERSON,
-                INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON,
-                INDEX_FIFTH_PERSON), List.of());
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                String.valueOf(INDEX_SIXTH_PERSON.getOneBased()),
+                String.valueOf(INDEX_THIRD_PERSON.getOneBased()),
+                String.valueOf(INDEX_FOURTH_PERSON.getOneBased()),
+                String.valueOf(INDEX_FIFTH_PERSON.getOneBased())));
 
         List<Person> draftPlayers = List.of(
                 model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased()),
@@ -105,17 +99,20 @@ public class DraftCommandTest {
     @Test
     public void execute_invalidPersonIndex_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getAddressBook().getPersonList().size() + 1);
-        DraftCommand draftCommand = new DraftCommand(List.of(INDEX_FIRST_PERSON, outOfBoundsIndex), List.of());
+        DraftCommand draftCommand = new DraftCommand(List.of(
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                String.valueOf(outOfBoundsIndex.getOneBased())));
 
         assertCommandFailure(draftCommand, model, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_invalidIgn_failure() {
-        String invalidIgn = "InvalidName";
-        DraftCommand draftCommand = new DraftCommand(List.of(), List.of(invalidIgn));
+        String invalidIgn = "i/InvalidName";
+        DraftCommand draftCommand = new DraftCommand(List.of(invalidIgn));
 
-        assertCommandFailure(draftCommand, model, String.format(MESSAGE_INVALID_IGN_NOT_FOUND, invalidIgn));
+        assertCommandFailure(draftCommand, model,
+                String.format(MESSAGE_INVALID_IGN_NOT_FOUND, "InvalidName"));
     }
 
     @Test
@@ -127,11 +124,11 @@ public class DraftCommandTest {
                 model.getAddressBook().getPersonList().get(INDEX_FOURTH_PERSON.getZeroBased()),
                 model.getAddressBook().getPersonList().get(INDEX_FIFTH_PERSON.getZeroBased()));
 
-        List<String> ignList = draftPlayers.stream()
-                .map(person -> person.getIgn().value)
+        List<String> ignIdentifiers = draftPlayers.stream()
+                .map(person -> "i/" + person.getIgn().value)
                 .toList();
 
-        DraftCommand draftCommand = new DraftCommand(List.of(), ignList);
+        DraftCommand draftCommand = new DraftCommand(ignIdentifiers);
 
         String expectedValidation = "\u2713 Draft Valid!\n"
                 + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)\n"
@@ -155,12 +152,17 @@ public class DraftCommandTest {
                 model.getAddressBook().getPersonList().get(INDEX_FOURTH_PERSON.getZeroBased()),
                 model.getAddressBook().getPersonList().get(INDEX_FIFTH_PERSON.getZeroBased()));
 
-        List<String> ignList = List.of(
-                expectedDraftPlayers.get(2).getIgn().value,
-                expectedDraftPlayers.get(3).getIgn().value,
-                expectedDraftPlayers.get(4).getIgn().value);
+        List<String> ignIdentifiers = List.of(
+                "i/" + expectedDraftPlayers.get(2).getIgn().value,
+                "i/" + expectedDraftPlayers.get(3).getIgn().value,
+                "i/" + expectedDraftPlayers.get(4).getIgn().value);
 
-        DraftCommand draftCommand = new DraftCommand(List.of(INDEX_FIRST_PERSON, INDEX_THIRD_PERSON), ignList);
+        DraftCommand draftCommand = new DraftCommand(List.of(
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                String.valueOf(INDEX_THIRD_PERSON.getOneBased()),
+                ignIdentifiers.get(0),
+                ignIdentifiers.get(1),
+                ignIdentifiers.get(2)));
 
         String expectedValidation = "\u2713 Draft Valid!\n"
                 + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)\n"
@@ -178,10 +180,10 @@ public class DraftCommandTest {
     public void execute_lessThanFivePlayers_failure() {
         // Only 4 players provided
         DraftCommand draftCommand = new DraftCommand(List.of(
-                INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON,
-                INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON), List.of());
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                String.valueOf(INDEX_SECOND_PERSON.getOneBased()),
+                String.valueOf(INDEX_THIRD_PERSON.getOneBased()),
+                String.valueOf(INDEX_FOURTH_PERSON.getOneBased())));
 
         assertCommandFailure(draftCommand, model, String.format(MESSAGE_INVALID_TEAM_SIZE, 4));
     }
@@ -190,12 +192,12 @@ public class DraftCommandTest {
     public void execute_moreThanFivePlayers_failure() {
         // 6 players provided
         DraftCommand draftCommand = new DraftCommand(List.of(
-                INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON,
-                INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON,
-                INDEX_FIFTH_PERSON,
-                INDEX_SIXTH_PERSON), List.of());
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                String.valueOf(INDEX_SECOND_PERSON.getOneBased()),
+                String.valueOf(INDEX_THIRD_PERSON.getOneBased()),
+                String.valueOf(INDEX_FOURTH_PERSON.getOneBased()),
+                String.valueOf(INDEX_FIFTH_PERSON.getOneBased()),
+                String.valueOf(INDEX_SIXTH_PERSON.getOneBased())));
 
         assertCommandFailure(draftCommand, model, String.format(MESSAGE_INVALID_TEAM_SIZE, 6));
     }
@@ -204,11 +206,11 @@ public class DraftCommandTest {
     public void execute_duplicatePlayer_failure() {
         // Same player selected twice using index
         DraftCommand draftCommand = new DraftCommand(List.of(
-                INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON,
-                INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON,
-                INDEX_FIRST_PERSON), List.of());
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                String.valueOf(INDEX_SECOND_PERSON.getOneBased()),
+                String.valueOf(INDEX_THIRD_PERSON.getOneBased()),
+                String.valueOf(INDEX_FOURTH_PERSON.getOneBased()),
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased())));
 
         Person duplicatePlayer = model.getAddressBook().getPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased());
@@ -218,16 +220,20 @@ public class DraftCommandTest {
 
     @Test
     public void equals() {
-        DraftCommand draftFirstCommand = new DraftCommand(List.of(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), List.of());
-        DraftCommand draftSecondCommand = new DraftCommand(List.of(INDEX_SECOND_PERSON, INDEX_THIRD_PERSON), List.of());
+        DraftCommand draftFirstCommand = new DraftCommand(
+                List.of(String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                        String.valueOf(INDEX_SECOND_PERSON.getOneBased())));
+        DraftCommand draftSecondCommand = new DraftCommand(
+                List.of(String.valueOf(INDEX_SECOND_PERSON.getOneBased()),
+                        String.valueOf(INDEX_THIRD_PERSON.getOneBased())));
 
         // same object -> returns true
         assertTrue(draftFirstCommand.equals(draftFirstCommand));
 
         // same values -> returns true
         DraftCommand draftFirstCommandCopy = new DraftCommand(
-                List.of(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON),
-                List.of());
+                List.of(String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                        String.valueOf(INDEX_SECOND_PERSON.getOneBased())));
         assertTrue(draftFirstCommand.equals(draftFirstCommandCopy));
 
         // different types -> returns false
@@ -240,17 +246,18 @@ public class DraftCommandTest {
         assertFalse(draftFirstCommand.equals(draftSecondCommand));
 
         // hybrid commands with same values -> returns true
-        DraftCommand draftHybrid1 = new DraftCommand(List.of(INDEX_FIRST_PERSON), List.of("BensonM88"));
-        DraftCommand draftHybrid2 = new DraftCommand(List.of(INDEX_FIRST_PERSON), List.of("BensonM88"));
+        DraftCommand draftHybrid1 = new DraftCommand(
+                List.of(String.valueOf(INDEX_FIRST_PERSON.getOneBased()), "i/BensonM88"));
+        DraftCommand draftHybrid2 = new DraftCommand(
+                List.of(String.valueOf(INDEX_FIRST_PERSON.getOneBased()), "i/BensonM88"));
         assertTrue(draftHybrid1.equals(draftHybrid2));
 
         // indices-only vs IGNs-only -> returns false
         DraftCommand draftWithIndicesOnly = new DraftCommand(
-                List.of(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON),
-                List.of());
+                List.of(String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                        String.valueOf(INDEX_SECOND_PERSON.getOneBased())));
         DraftCommand draftWithIgnsOnly = new DraftCommand(
-                List.of(),
-                List.of("AliceP99", "BensonM88"));
+                List.of("i/AliceP99", "i/BensonM88"));
         assertFalse(draftWithIndicesOnly.equals(draftWithIgnsOnly));
 
         // indices-only vs hybrid -> returns false
@@ -260,16 +267,18 @@ public class DraftCommandTest {
     @Test
     public void toStringMethod() {
         // test with indices only
-        List<Index> indices = List.of(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
-        DraftCommand draftCommand = new DraftCommand(indices, List.of());
-        String expected = DraftCommand.class.getCanonicalName() + "{indices=" + indices + ", igns=[]}";
+        List<String> identifiers = List.of(
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()),
+                String.valueOf(INDEX_SECOND_PERSON.getOneBased()));
+        DraftCommand draftCommand = new DraftCommand(identifiers);
+        String expected = DraftCommand.class.getCanonicalName() + "{identifiers=" + identifiers + "}";
         assertEquals(expected, draftCommand.toString());
 
         // test with hybrid (indices and IGNs)
-        indices = List.of(INDEX_FIRST_PERSON);
-        List<String> igns = List.of("BensonM88", "CarlK77");
-        draftCommand = new DraftCommand(indices, igns);
-        expected = DraftCommand.class.getCanonicalName() + "{indices=" + indices + ", igns=" + igns + "}";
+        identifiers = List.of(
+                String.valueOf(INDEX_FIRST_PERSON.getOneBased()), "i/BensonM88", "i/CarlK77");
+        draftCommand = new DraftCommand(identifiers);
+        expected = DraftCommand.class.getCanonicalName() + "{identifiers=" + identifiers + "}";
         assertEquals(expected, draftCommand.toString());
     }
 }

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.CommandUtil;
 import seedu.address.logic.Messages;
@@ -42,20 +41,17 @@ public class DraftCommand extends Command {
     private static final int REQUIRED_TEAM_SIZE = 5;
     private static final int REQUIRED_PLAYERS_PER_ROLE = 1;
 
-    private final List<Index> indices;
-    private final List<String> igns;
+    private final List<String> identifiers;
 
     /**
-     * Creates a DraftCommand with the specified player indices and IGNs.
+     * Creates a DraftCommand with the specified player identifiers.
+     * Each identifier is either a numeric index or an IGN prefixed with 'i/'.
      *
-     * @param indices list of indices of players to draft (may be empty)
-     * @param igns list of in-game names of players to draft (may be empty)
+     * @param identifiers list of identifiers for players to draft
      */
-    public DraftCommand(List<Index> indices, List<String> igns) {
-        requireNonNull(indices);
-        requireNonNull(igns);
-        this.indices = new ArrayList<>(indices);
-        this.igns = new ArrayList<>(igns);
+    public DraftCommand(List<String> identifiers) {
+        requireNonNull(identifiers);
+        this.identifiers = new ArrayList<>(identifiers);
     }
 
     @Override
@@ -63,20 +59,11 @@ public class DraftCommand extends Command {
         requireNonNull(model);
         List<Person> addressBookList = model.getAddressBook().getPersonList();
 
-        // Resolve all players from both indices and IGNs
+        // Resolve all players from identifiers
         List<Person> selectedPlayers = new ArrayList<>();
 
-        // Resolve indices
-        for (Index index : indices) {
-            if (index.getZeroBased() >= addressBookList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-            selectedPlayers.add(addressBookList.get(index.getZeroBased()));
-        }
-
-        // Resolve IGNs
-        for (String ign : igns) {
-            selectedPlayers.add(CommandUtil.findPersonByIdentifier(addressBookList, ign));
+        for (String identifier : identifiers) {
+            selectedPlayers.add(CommandUtil.findPersonByIdentifier(addressBookList, identifier));
         }
 
         // Check for exactly 5 unique players
@@ -207,14 +194,13 @@ public class DraftCommand extends Command {
         }
 
         DraftCommand otherDraftCommand = (DraftCommand) other;
-        return indices.equals(otherDraftCommand.indices) && igns.equals(otherDraftCommand.igns);
+        return identifiers.equals(otherDraftCommand.identifiers);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("indices", indices)
-                .add("igns", igns)
+                .add("identifiers", identifiers)
                 .toString();
     }
 }

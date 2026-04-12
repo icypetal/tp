@@ -19,6 +19,17 @@ public class CommandUtil {
      * @throws CommandException if the identifier is invalid (out of bounds index or IGN not found)
      */
     public static Person findPersonByIdentifier(List<Person> personList, String identifier) throws CommandException {
+        // Check if identifier is an IGN with i/ prefix
+        if (identifier.startsWith("i/")) {
+            String ign = identifier.substring(2);
+            for (Person person : personList) {
+                if (person.getIgn().value.equalsIgnoreCase(ign)) {
+                    return person;
+                }
+            }
+            throw new CommandException(String.format("Player with IGN '%1$s' not found", ign));
+        }
+
         // Check if identifier is an index (numeric)
         if (identifier.matches("\\d+")) {
             int index = Integer.parseInt(identifier) - 1; // Convert to zero-based
@@ -26,14 +37,14 @@ public class CommandUtil {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
             return personList.get(index);
-        } else {
-            // It's an IGN
-            for (Person person : personList) {
-                if (person.getIgn().value.equalsIgnoreCase(identifier)) {
-                    return person;
-                }
-            }
-            throw new CommandException(String.format("Player with IGN '%1$s' not found", identifier));
         }
+
+        // Fallback: treat as IGN (for backward compatibility)
+        for (Person person : personList) {
+            if (person.getIgn().value.equalsIgnoreCase(identifier)) {
+                return person;
+            }
+        }
+        throw new CommandException(String.format("Player with IGN '%1$s' not found", identifier));
     }
 }

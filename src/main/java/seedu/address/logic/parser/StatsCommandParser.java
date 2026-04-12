@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEATHS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_KILLS;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.StatsCommand;
 import seedu.address.logic.commands.StatsCommand.EditStatsDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -30,9 +29,9 @@ public class StatsCommandParser implements Parser<StatsCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
             args, PREFIX_ENTITY, PREFIX_KILLS, PREFIX_DEATHS, PREFIX_ASSISTS);
 
-        Index index;
+        String identifier;
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            identifier = ParserUtil.parseIdentifier(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, StatsCommand.PARAMETERS), pe);
         }
@@ -63,6 +62,6 @@ public class StatsCommandParser implements Parser<StatsCommand> {
             throw new ParseException(StatsCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new StatsCommand(index, editStatsDescriptor);
+        return new StatsCommand(identifier, editStatsDescriptor);
     }
 }

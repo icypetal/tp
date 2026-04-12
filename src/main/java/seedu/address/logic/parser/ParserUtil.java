@@ -40,7 +40,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_IDENTIFIER =
         "Invalid identifier. Must be either a global positive integer index shown beside a player in the list "
-            + "or an IGN prefixed with 'i/'.";
+            + "or an IGN prefixed with 'i/' (e.g., i/PlayerName).";
     public static final String MESSAGE_INVALID_STATISTICS_FORMAT =
         "Invalid statistics. The format of statistics is s/kills-deaths-assists";
 
@@ -59,24 +59,25 @@ public class ParserUtil {
 
     /**
      * Parses {@code identifier} which can be either an index (numeric) or an IGN (prefixed with i/).
-     * Returns a string representation of the identifier.
+     * Returns a string representation of the identifier with the i/ prefix preserved for IGNs.
      *
      * @throws ParseException if the identifier format is invalid.
      */
     public static String parseIdentifier(String identifier) throws ParseException {
         String trimmed = identifier.trim();
 
-        // Check if it's a numeric index
-        if (StringUtil.isNonZeroUnsignedInteger(trimmed)) {
-            return trimmed;
-        }
-
-        // Check if it's an IGN with prefix
+        // Check if it's an IGN with prefix (check this FIRST so numeric IGNs work)
         if (trimmed.startsWith("i/")) {
             String ign = trimmed.substring(2);
             if (!ign.isEmpty()) {
-                return ign;
+                return trimmed; // Keep the i/ prefix intact
             }
+            throw new ParseException(MESSAGE_INVALID_IDENTIFIER);
+        }
+
+        // Check if it's a numeric index
+        if (StringUtil.isNonZeroUnsignedInteger(trimmed)) {
+            return trimmed;
         }
 
         throw new ParseException(MESSAGE_INVALID_IDENTIFIER);

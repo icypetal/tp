@@ -9,8 +9,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_KILLS;
 import java.util.List;
 import java.util.Optional;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.CommandUtil;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -29,10 +29,10 @@ public class StatsCommand extends Command {
     public static final String COMMAND_WORD = "stats";
 
     public static final String MESSAGE_USAGE = "Updates the statistics of the person identified "
-            + "by the index number used in the list. "
+            + "by the index number or IGN. "
             + "Existing values will be overwritten by the input values.";
 
-    public static final String PARAMETERS = "Parameters: INDEX (must be a positive integer) "
+    public static final String PARAMETERS = "Parameters: (INDEX | i/IGN) "
             + PREFIX_ENTITY + "ENTITY "
             + "[" + PREFIX_KILLS + "KILLS] "
             + "[" + PREFIX_DEATHS + "DEATHS] "
@@ -45,19 +45,18 @@ public class StatsCommand extends Command {
     public static final String MESSAGE_STATS_SUCCESS = "Updated Statistics for Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one statistics field to update must be provided.";
 
-    private final Index index;
+    private final String identifier;
     private final EditStatsDescriptor editStatsDescriptor;
 
     /**
-     * @param index               of the person in the filtered person list to
-     *                            update stats
+     * @param identifier          of the person (index or i/IGN) to update stats
      * @param editStatsDescriptor details to update the statistics with
      */
-    public StatsCommand(Index index, EditStatsDescriptor editStatsDescriptor) {
-        requireNonNull(index);
+    public StatsCommand(String identifier, EditStatsDescriptor editStatsDescriptor) {
+        requireNonNull(identifier);
         requireNonNull(editStatsDescriptor);
 
-        this.index = index;
+        this.identifier = identifier;
         this.editStatsDescriptor = new EditStatsDescriptor(editStatsDescriptor);
     }
 
@@ -66,11 +65,7 @@ public class StatsCommand extends Command {
         requireNonNull(model);
         List<Person> addressBookList = model.getAddressBook().getPersonList();
 
-        if (index.getZeroBased() >= addressBookList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = addressBookList.get(index.getZeroBased());
+        Person personToEdit = CommandUtil.findPersonByIdentifier(addressBookList, identifier);
         Person editedPerson = createStatsEditedPerson(personToEdit, editStatsDescriptor);
 
         model.setPerson(personToEdit, editedPerson);
@@ -128,7 +123,7 @@ public class StatsCommand extends Command {
         }
 
         StatsCommand otherStatsCommand = (StatsCommand) other;
-        return index.equals(otherStatsCommand.index)
+        return identifier.equals(otherStatsCommand.identifier)
                 && editStatsDescriptor.equals(otherStatsCommand.editStatsDescriptor);
     }
 
