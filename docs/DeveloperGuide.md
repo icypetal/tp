@@ -371,7 +371,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User <ins>lists all players (UC10)</ins>.
-2. User requests to edit a specific player by index or IGN with one or more fields.
+2. User requests to edit a specific player by index with one or more fields.
 3. DraftDeck updates the player and shows a success message.
 
    Use case ends.
@@ -390,9 +390,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
    Use case resumes at step 1.
 
-* 2c. The given IGN is not found in the player list.
+* 2c. At least one parameter value is invalid (e.g., invalid phone format, invalid role, invalid rank).
 
-   * 2c1. DraftDeck displays an error message.
+   * 2c1. DraftDeck displays an error message specific to the invalid field.
 
    Use case resumes at step 1.
 
