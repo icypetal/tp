@@ -57,12 +57,12 @@ public class InGameName {
         }
 
         InGameName otherIgn = (InGameName) other;
-        return value.equals(otherIgn.value);
+        return value.equalsIgnoreCase(otherIgn.value);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return value.toLowerCase().hashCode();
     }
 
 }
