@@ -22,6 +22,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -64,6 +65,7 @@ public class DraftCommandTest {
                 + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)\n"
                 + "Average Rank: GOLD I";
         String expectedMessage = String.format(DraftCommand.MESSAGE_SUCCESS, expectedValidation);
+        expectedMessage += "\n" + Messages.MESSAGE_GLOBAL_INDEX_COMMAND_CUE;
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, null, null,
                 true, draftPlayers);
 
@@ -92,6 +94,7 @@ public class DraftCommandTest {
                 + "Average Rank: GOLD I\n"
                 + "Issues: Too many TOP players, Missing JUNGLE player";
         String expectedMessage = String.format(DraftCommand.MESSAGE_SUCCESS, expectedValidation);
+        expectedMessage += "\n" + Messages.MESSAGE_GLOBAL_INDEX_COMMAND_CUE;
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, null, null,
                 true, draftPlayers);
 
@@ -134,6 +137,7 @@ public class DraftCommandTest {
                 + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)\n"
                 + "Average Rank: GOLD I";
         String expectedMessage = String.format(DraftCommand.MESSAGE_SUCCESS, expectedValidation);
+        expectedMessage += "\n" + Messages.MESSAGE_GLOBAL_INDEX_COMMAND_CUE;
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, null, null,
                 true, draftPlayers);
 
@@ -162,6 +166,7 @@ public class DraftCommandTest {
                 + "Composition: TOP (1) | JUNGLE (1) | MID (1) | BOT (1) | SUPPORT (1)\n"
                 + "Average Rank: GOLD I";
         String expectedMessage = String.format(DraftCommand.MESSAGE_SUCCESS, expectedValidation);
+        expectedMessage += "\n" + Messages.MESSAGE_GLOBAL_INDEX_COMMAND_CUE;
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false, false, null, null,
                 true, expectedDraftPlayers);
 
