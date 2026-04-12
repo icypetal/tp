@@ -690,10 +690,10 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: Multiple players with different names in the list.
 
    1. Test case: `find John`<br>
-      Expected: Players with names containing "John" are displayed (case-insensitive).
+      Expected: Players with names matching the full word "John" are displayed (case-insensitive, matches "John Doe" but not "Johnathan Doe").
 
    1. Test case: `find alex david`<br>
-      Expected: Players with names containing either "alex" or "david" are displayed.
+      Expected: Players with names matching either of the full words "alex" or "david" are displayed.
 
    1. Test case: `find NonExistentPlayer`<br>
       Expected: Empty list is displayed.
