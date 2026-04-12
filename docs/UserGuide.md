@@ -132,11 +132,11 @@ Examples:
 
 #### Deleting a player : `delete`
 
-Deletes the specified person from the player list.
+Deletes the specified player from the player list.
 
 Format: `delete INDEX`
 
-* Deletes the person at the specified `INDEX`.
+* Deletes the player at the specified `INDEX`.
 * The index refers to the index number shown beside each player in the list.
 * These numbers are global: they are based on the full player list and stay the same after `find`/`filter`.
 * The index **must be a positive integer** 1, 2, 3, …​
@@ -147,19 +147,19 @@ Edits an existing player in the player list.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [i/IGN] [r/ROLE] [rank/RANK] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown beside each player in the list.
+* Edits the player at the specified `INDEX`. The index refers to the index number shown beside each player in the list.
 * These numbers are global: they are based on the full player list and stay the same after `find`/`filter`.
 * The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without
+* When editing tags, the existing tags of the player will be removed i.e adding of tags is not cumulative.
+* You can remove all the player's tags by typing `t/` without
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-*  `edit 3 r/JUNGLE rank/DIAMOND I` Edits the role and rank of the 3rd person.
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st player to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd player to be `Betsy Crower` and clears all existing tags.
+*  `edit 3 r/JUNGLE rank/DIAMOND I` Edits the role and rank of the 3rd player.
 
 #### Listing all players : `list`
 
@@ -198,7 +198,7 @@ Format: `filter [t/KEYWORD [MORE_KEYWORDS]...] [r/KEYWORD [MORE_KEYWORDS]...] [e
 * The search is case-insensitive. e.g `friend` will match `friend`, `Friend`, or `FRIEND`
 * You can filter by tags (`t/`), roles (`r/`), entities (`ent/`), or any combination of these.
 * Within each category (tags, roles, entities), players matching at least one keyword will be returned (i.e. `OR` search).
-* Multiple categories are combined with `AND` logic - a person must match at least one keyword from each specified category.
+* Multiple categories are combined with `AND` logic - a player must match at least one keyword from each specified category.
 * Only full words will be matched e.g. `friend` will not match `friends`
 * Changes which players are displayed, but the index numbers stay the same.
 * These numbers are global: they are based on the full player list and stay the same after `find`/`filter`.
