@@ -345,7 +345,7 @@ Action | Format, Examples
 **Filter** | `filter [t/KEYWORD [MORE_KEYWORDS]...] [r/KEYWORD [MORE_KEYWORDS]...] [ent/KEYWORD [MORE_KEYWORDS]...]`<br> e.g., `filter t/pro r/bot ent/Jinx`
 **Help** | `help`
 **List** | `list`
-**Result** | `result w/RESULT [date/yyyy-MM-dd] i/IGN ent/ENTITY k/KILLS d/DEATHS a/ASSISTS [(i/IGN ent/ENTITY k/KILLS d/DEATHS a/ASSISTS)]…​`<br> e.g., `result w/WIN i/AlexY42 ent/Ahri s/10-2-8 i/Bern_Storm ent/Leona s/1-1-12 i/Charlie99 ent/Evelynn s/5-6-15 i/DavidLi91 ent/Irelia s/2-19-4 i/IrfanZ ent/Kayn s/6-3-8`
+**Result** | `result w/RESULT [date/yyyy-MM-dd] i/IGN ent/ENTITY s/KILLS-DEATHS-ASSISTS`<br> e.g., `result w/WIN i/AlexY42 ent/Ahri s/10-2-8 i/Bern_Storm ent/Leona s/1-1-12 i/Charlie99 ent/Evelynn s/5-6-15 i/DavidLi91 ent/Irelia s/2-19-4 i/IrfanZ ent/Kayn s/6-3-8`
 **Stats** | `stats INDEX ent/ENTITY [k/KILLS] [d/DEATHS] [a/ASSISTS]`<br> e.g., `stats 1 ent/Ahri k/50 d/10 a/20`
 
 
@@ -583,7 +583,7 @@ We could use the `stats` command again, but since we are tracking multiple playe
 {:.no_toc}
 
 ```
-result w/WIN date/2026-09-01 i/Dust ent/Gwen k/3 d/0 a/4 i/CraliX ent/Zed k/5 d/1 a/2 i/Raven ent/Anivia k/1 d/6 a/5 i/Ciela ent/Zeri k/2 d/4 a/0 i/Kra ent/Ashe k/1 d/3 a/9
+result w/WIN date/2026-09-01 i/Dust ent/Gwen s/3-0-4 i/CraliX ent/Zed s/5-1-2 i/Raven ent/Anivia s/1-6-5 i/Ciela ent/Zeri s/2-4-0 i/Kra ent/Ashe s/1-3-9
 ```
 
 **Expected Output:**
