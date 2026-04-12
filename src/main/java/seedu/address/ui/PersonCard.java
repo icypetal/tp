@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -28,9 +29,8 @@ public class PersonCard extends UiPart<Region> {
     private final Person person;
 
     /**
-     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
-     * As a consequence, UI elements' variable names cannot be set to such keywords
-     * or an exception will be thrown by JavaFX during runtime.
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX. As a consequence, UI
+     * elements' variable names cannot be set to such keywords or an exception will be thrown by JavaFX during runtime.
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
@@ -76,13 +76,15 @@ public class PersonCard extends UiPart<Region> {
         this.entityButtonMap = new HashMap<>();
 
         id.setText(displayedIndex + ". ");
-        name.setText(person.getIgn().toString() + "(" + person.getName().fullName + ")");
+        String nameText = person.getIgn().toString() + "(" + person.getName().fullName + ")";
+        name.setText(nameText);
+        Tooltip nameTooltip = new Tooltip(nameText);
+        name.setTooltip(nameTooltip);
         phone.setText(person.getPhone().value);
         email.setText(person.getEmail().value);
         role.setText("Role: " + person.getRole().toString());
         rank.setText("Rank: " + person.getRank().toString());
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
+        person.getTags().stream().sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         stats.setText(person.getOverallStatistics().toString());
 
@@ -120,8 +122,7 @@ public class PersonCard extends UiPart<Region> {
             } else {
                 // Remove border from other buttons
                 String currentStyle = button.getStyle();
-                button.setStyle(currentStyle.replace(
-                    "-fx-border-color: #000000; -fx-border-width: 2;", ""));
+                button.setStyle(currentStyle.replace("-fx-border-color: #000000; -fx-border-width: 2;", ""));
             }
         });
     }

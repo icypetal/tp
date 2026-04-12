@@ -8,6 +8,7 @@ import java.util.Set;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import seedu.address.model.entity.Entity;
@@ -173,9 +174,7 @@ public class ComparePanel extends UiPart<VBox> {
      */
     private void updateButtonSelection(Button clickedButton, boolean isSelected) {
         // Remove selection from all buttons in all three FlowPanes
-        for (FlowPane flowPane : List.of(
-                entityButtonsFlowPanePlayer1,
-                entityButtonsFlowPaneCommon,
+        for (FlowPane flowPane : List.of(entityButtonsFlowPanePlayer1, entityButtonsFlowPaneCommon,
                 entityButtonsFlowPanePlayer2)) {
             for (Object child : flowPane.getChildren()) {
                 if (child instanceof Button) {
@@ -195,15 +194,13 @@ public class ComparePanel extends UiPart<VBox> {
      * Displays overall stats for both players.
      */
     private void displayOverallStats() {
-        setPlayerStats(player1, player1Name, player1Role, player1Rank, player1StatsLabel,
-                player1Kills, player1KillsIndicator, player1Deaths, player1DeathsIndicator,
-                player1Assists, player1AssistsIndicator, player1KdRatio, player1KdIndicator,
-                player1.getOverallStatistics(), "Overall Stats:");
+        setPlayerStats(player1, player1Name, player1Role, player1Rank, player1StatsLabel, player1Kills,
+                player1KillsIndicator, player1Deaths, player1DeathsIndicator, player1Assists, player1AssistsIndicator,
+                player1KdRatio, player1KdIndicator, player1.getOverallStatistics(), "Overall Stats:");
 
-        setPlayerStats(player2, player2Name, player2Role, player2Rank, player2StatsLabel,
-                player2Kills, player2KillsIndicator, player2Deaths, player2DeathsIndicator,
-                player2Assists, player2AssistsIndicator, player2KdRatio, player2KdIndicator,
-                player2.getOverallStatistics(), "Overall Stats:");
+        setPlayerStats(player2, player2Name, player2Role, player2Rank, player2StatsLabel, player2Kills,
+                player2KillsIndicator, player2Deaths, player2DeathsIndicator, player2Assists, player2AssistsIndicator,
+                player2KdRatio, player2KdIndicator, player2.getOverallStatistics(), "Overall Stats:");
 
         setComparisons(player1.getOverallStatistics(), player2.getOverallStatistics());
     }
@@ -218,20 +215,18 @@ public class ComparePanel extends UiPart<VBox> {
         boolean player1HasStats = player1Stats.containsKey(entity);
         boolean player2HasStats = player2Stats.containsKey(entity);
 
-        Statistics stats1 = player1HasStats
-                ? player1Stats.getStatistics(entity) : Statistics.createDefault();
-        Statistics stats2 = player2HasStats
-                ? player2Stats.getStatistics(entity) : Statistics.createDefault();
+        Statistics stats1 = player1HasStats ? player1Stats.getStatistics(entity) : Statistics.createDefault();
+        Statistics stats2 = player2HasStats ? player2Stats.getStatistics(entity) : Statistics.createDefault();
 
-        setPlayerStats(player1, player1Name, player1Role, player1Rank, player1StatsLabel,
-                player1Kills, player1KillsIndicator, player1Deaths, player1DeathsIndicator,
-                player1Assists, player1AssistsIndicator, player1KdRatio, player1KdIndicator,
-                stats1, player1HasStats ? "Stats for " + entity.getName() : EMPTY_STATS);
+        setPlayerStats(player1, player1Name, player1Role, player1Rank, player1StatsLabel, player1Kills,
+                player1KillsIndicator, player1Deaths, player1DeathsIndicator, player1Assists, player1AssistsIndicator,
+                player1KdRatio, player1KdIndicator, stats1,
+                player1HasStats ? "Stats for " + entity.getName() : EMPTY_STATS);
 
-        setPlayerStats(player2, player2Name, player2Role, player2Rank, player2StatsLabel,
-                player2Kills, player2KillsIndicator, player2Deaths, player2DeathsIndicator,
-                player2Assists, player2AssistsIndicator, player2KdRatio, player2KdIndicator,
-                stats2, player2HasStats ? "Stats for " + entity.getName() : EMPTY_STATS);
+        setPlayerStats(player2, player2Name, player2Role, player2Rank, player2StatsLabel, player2Kills,
+                player2KillsIndicator, player2Deaths, player2DeathsIndicator, player2Assists, player2AssistsIndicator,
+                player2KdRatio, player2KdIndicator, stats2,
+                player2HasStats ? "Stats for " + entity.getName() : EMPTY_STATS);
 
         // Only set comparisons if both players have stats
         if (player1HasStats && player2HasStats) {
@@ -270,12 +265,13 @@ public class ComparePanel extends UiPart<VBox> {
     /**
      * Sets the details for a player.
      */
-    private void setPlayerStats(Person player, Label nameLabel, Label roleLabel, Label rankLabel,
-            Label statsLabel, Label killsLabel, Label killsIndicator, Label deathsLabel,
-            Label deathsIndicator, Label assistsLabel, Label assistsIndicator, Label kdLabel,
-            Label kdIndicator, Statistics stats, String statsLabelText) {
+    private void setPlayerStats(Person player, Label nameLabel, Label roleLabel, Label rankLabel, Label statsLabel,
+            Label killsLabel, Label killsIndicator, Label deathsLabel, Label deathsIndicator, Label assistsLabel,
+            Label assistsIndicator, Label kdLabel, Label kdIndicator, Statistics stats, String statsLabelText) {
         String displayName = player.getIgn().toString() + " (" + player.getName().fullName + ")";
         nameLabel.setText(displayName);
+        Tooltip nameTooltip = new Tooltip(displayName);
+        nameLabel.setTooltip(nameTooltip);
         roleLabel.setText(player.getRole().toString());
         rankLabel.setText(player.getRank().toString());
 
