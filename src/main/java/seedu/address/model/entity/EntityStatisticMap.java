@@ -79,10 +79,10 @@ public class EntityStatisticMap {
     }
 
     /**
-     * Returns the internal map for operations that need direct access.
+     * Returns an unmodifiable view of the internal map.
      */
     public Map<Entity, Statistics> getMap() {
-        return entityStats;
+        return Collections.unmodifiableMap(entityStats);
     }
 
     /**

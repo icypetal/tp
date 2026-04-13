@@ -103,15 +103,22 @@ public class Person {
     public Person addEntityStatistics(Statistics statsToAdd, Entity entity) {
         EntityStatisticMap newStats = new EntityStatisticMap();
         newStats.putAll(this.entityStats);
-        newStats.addStatistics(entity, statsToAdd);
+        if (newStats.containsKey(entity)) {
+            newStats.addStatistics(entity, newStats.getStatistics(entity).add(statsToAdd));
+        } else {
+            newStats.addStatistics(entity, statsToAdd);
+        }
         return new Person(name, phone, email, role, ign, rank, tags, newStats);
     }
 
     /**
-     * Gets overall entity statistics
+     * Gets overall entity statistics.
+     * Returns a defensive copy to preserve immutability.
      */
     public EntityStatisticMap getOverallEntityStatistics() {
-        return entityStats;
+        EntityStatisticMap copy = new EntityStatisticMap();
+        copy.putAll(entityStats);
+        return copy;
     }
 
     /**
