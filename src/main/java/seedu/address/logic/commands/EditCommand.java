@@ -24,7 +24,6 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.entity.EntityStatisticMap;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InGameName;
 import seedu.address.model.person.Name;
@@ -154,7 +153,6 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
-        private Address address;
         private InGameName ign;
         private Role role;
         private Rank rank;
@@ -170,7 +168,6 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setAddress(toCopy.address);
             setIgn(toCopy.ign);
             setRole(toCopy.role);
             setRank(toCopy.rank);
@@ -181,7 +178,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, ign, role, rank, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, ign, role, rank, tags);
         }
 
         public void setName(Name name) {
@@ -206,14 +203,6 @@ public class EditCommand extends Command {
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
         }
 
         public void setIgn(InGameName ign) {
@@ -272,7 +261,6 @@ public class EditCommand extends Command {
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(role, otherEditPersonDescriptor.role)
                     && Objects.equals(rank, otherEditPersonDescriptor.rank)
                     && Objects.equals(ign, otherEditPersonDescriptor.ign)
@@ -285,7 +273,6 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("address", address)
                     .add("role", role)
                     .add("rank", rank)
                     .add("ign", ign)
