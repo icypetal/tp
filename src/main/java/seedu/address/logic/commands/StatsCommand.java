@@ -80,25 +80,13 @@ public class StatsCommand extends Command {
         assert personToEdit != null;
         assert descriptor.getEntity() != null; // Entity is required for stats update
 
-        EntityStatisticMap stats = personToEdit.getOverallEntityStatistics();
+        EntityStatisticMap stats = personToEdit.getOverallEntityStatistics()
+                .addStatistics(descriptor.getEntity(), new Statistics.Builder()
+                        .withKills(descriptor.kills)
+                        .withDeaths(descriptor.deaths)
+                        .withAssists(descriptor.assists).build());
 
         // Build new statistics object using provided values or current ones
-        if (stats.containsKey(descriptor.getEntity())) {
-            stats.addStatistics(descriptor.getEntity(),
-                stats.getStatistics(descriptor.getEntity())
-                .add(new Statistics.Builder()
-                .withKills(descriptor.getKills().orElse(new Kills("0")))
-                .withDeaths(descriptor.getDeaths().orElse(new Deaths("0")))
-                .withAssists(descriptor.getAssists().orElse(new Assists("0")))
-                .build()));
-        } else {
-            stats.addStatistics(descriptor.getEntity(),
-                new Statistics.Builder()
-                .withKills(descriptor.getKills().orElse(new Kills("0")))
-                .withDeaths(descriptor.getDeaths().orElse(new Deaths("0")))
-                .withAssists(descriptor.getAssists().orElse(new Assists("0")))
-                .build());
-        }
         return new Person(
                 personToEdit.getName(),
                 personToEdit.getPhone(),

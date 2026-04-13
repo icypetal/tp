@@ -55,10 +55,11 @@ public class EntityStatisticMap {
      * @param entity The entity to add/update
      * @param statistics The statistics to associate with the entity
      */
-    public void addStatistics(Entity entity, Statistics statistics) {
+    public EntityStatisticMap addStatistics(Entity entity, Statistics statistics) {
         requireNonNull(entity);
         requireNonNull(statistics);
-        entityStats.put(entity, statistics);
+        entityStats.put(entity, statistics.add(entityStats.getOrDefault(entity, Statistics.createDefault())));
+        return this;
     }
 
     /**
