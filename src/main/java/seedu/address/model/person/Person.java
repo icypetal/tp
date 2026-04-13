@@ -103,11 +103,7 @@ public class Person {
     public Person addEntityStatistics(Statistics statsToAdd, Entity entity) {
         EntityStatisticMap newStats = new EntityStatisticMap();
         newStats.putAll(this.entityStats);
-        if (newStats.containsKey(entity)) {
-            newStats.addStatistics(entity, newStats.getStatistics(entity).add(statsToAdd));
-        } else {
-            newStats.addStatistics(entity, statsToAdd);
-        }
+        newStats.addStatistics(entity, statsToAdd);
         return new Person(name, phone, email, role, ign, rank, tags, newStats);
     }
 
