@@ -802,7 +802,7 @@ testers are expected to do more *exploratory* testing.
 1. Invalid parameter values
 
    1. Test case: `add n/12345 p/98765432 e/test@test.com i/Test r/MID rank/GOLD I` (name contains only numbers)<br>
-      Expected: Player is added (name validation allows alphanumeric characters).
+      Expected: Error message indicating invalid name format.
 
    1. Test case: `add n/Test p/abc e/test@test.com i/Test r/MID rank/GOLD I` (invalid phone format)<br>
       Expected: Error message indicating invalid phone format.
